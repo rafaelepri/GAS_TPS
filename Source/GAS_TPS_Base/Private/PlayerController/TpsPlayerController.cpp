@@ -11,6 +11,7 @@
 #include "GameMode/MainGameMode.h"
 #include "HUD/Widget/Announcement.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/CombatComponent.h"
 #include "Net/UnrealNetwork.h"
 
 void ATpsPlayerController::BeginPlay()
@@ -315,6 +316,16 @@ void ATpsPlayerController::OnMatchStart()
 
 void ATpsPlayerController::OnMatchEnd()
 {
+	if (ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>( GetPawn()))
+	{
+		CharacterBase->bDisableGameplay = true;
+
+		if (CharacterBase->GetCombatComponent())
+		{
+			CharacterBase->GetCombatComponent()->FireButtonPressed(false);
+		}
+	}
+	
 	TpsHUD = !TpsHUD ? Cast<ATpsHUD>(GetHUD()) : TpsHUD;
 	if (TpsHUD)
 	{
