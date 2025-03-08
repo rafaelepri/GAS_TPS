@@ -60,6 +60,8 @@ protected:
 private:
 	UPROPERTY()
 	class ATpsHUD* TpsHUD;
+	UPROPERTY()
+	class AMainGameMode* MainGameMode;
 
 	float LevelStartingTime = 0.f;
 	float MatchTime = 0.f;

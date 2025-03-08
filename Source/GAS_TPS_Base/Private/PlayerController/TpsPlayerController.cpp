@@ -156,6 +156,12 @@ void ATpsPlayerController::SetHUDMatchCountdown(const float& CountdownTime)
 		TpsHUD->CharacterOverlay &&
 		TpsHUD->CharacterOverlay->MatchCountdownText)
 	{
+		if (CountdownTime < 0.f)
+		{
+			TpsHUD->CharacterOverlay->MatchCountdownText->SetVisibility(ESlateVisibility::Hidden);
+			return;
+		}
+		
 		const int32 Minutes = FMath::FloorToInt(CountdownTime / 60);
 		const int32 Seconds = CountdownTime - Minutes * 60;
 		
@@ -172,6 +178,12 @@ void ATpsPlayerController::SetHUDAnnouncementCountdown(const float& CountdownTim
 		TpsHUD->AnnouncementOverlay &&
 		TpsHUD->AnnouncementOverlay->WarmupTime)
 	{
+		if (CountdownTime < 0.f)
+		{
+			TpsHUD->AnnouncementOverlay->WarmupTime->SetVisibility(ESlateVisibility::Hidden);
+			return;
+		}
+		
 		const int32 Minutes = FMath::FloorToInt(CountdownTime / 60);
 		const int32 Seconds = CountdownTime - Minutes * 60;
 		
@@ -188,13 +200,22 @@ void ATpsPlayerController::SetHUDTime()
 	else if (MatchState == MatchState::InProgress) TimeLeft = WarmupTime + MatchTime - ServerTime + LevelStartingTime;
 	else if (MatchState == MatchState::Cooldown) TimeLeft = CooldownTime + WarmupTime + MatchTime - ServerTime + LevelStartingTime;
 	
-	const uint32 SecondsLeft = FMath::CeilToInt(TimeLeft);
+	uint32 SecondsLeft = FMath::CeilToInt(TimeLeft);
 
+	if (HasAuthority())
+	{
+		MainGameMode = !MainGameMode ? Cast<AMainGameMode>(UGameplayStatics::GetGameMode(this)) : MainGameMode;
+		if (MainGameMode)
+		{
+			SecondsLeft = FMath::CeilToInt(MainGameMode->GetCountdownTime() + LevelStartingTime);
+		}
+	}
+	
 	if (CountdownInt != SecondsLeft)
 	{
 		if (MatchState == MatchState::WaitingToStart || MatchState == MatchState::Cooldown)
 		{
-			SetHUDAnnouncementCountdown(TimeLeft);
+			SetHUDAnnouncementCountdown(SecondsLeft);
 		}
 		if (MatchState == MatchState::InProgress)
 		{
@@ -298,9 +319,12 @@ void ATpsPlayerController::OnMatchEnd()
 	if (TpsHUD)
 	{
 		TpsHUD->CharacterOverlay->RemoveFromParent();
-		if (TpsHUD->AnnouncementOverlay)
+		if (TpsHUD->AnnouncementOverlay && TpsHUD->AnnouncementOverlay->AnnouncementText && TpsHUD->AnnouncementOverlay->InfoText)
 		{
 			TpsHUD->AnnouncementOverlay->SetVisibility(ESlateVisibility::Visible);
+			const FString AnnouncementText("New Match Starts In: ");
+			TpsHUD->AnnouncementOverlay->AnnouncementText->SetText(FText::FromString(AnnouncementText));
+			TpsHUD->AnnouncementOverlay->InfoText->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
 }
