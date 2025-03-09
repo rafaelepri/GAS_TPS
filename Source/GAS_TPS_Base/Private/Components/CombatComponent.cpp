@@ -27,14 +27,15 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 void UCombatComponent::BeginPlay() {
 	Super::BeginPlay();
 
-
 	if (Character)
 	{
-		TpsPlayerController = Cast<ATpsPlayerController>(Character->Controller);
-		if (TpsPlayerController)
-		{
-			HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
-		}
+		// TpsPlayerController = Cast<ATpsPlayerController>(Character->Controller);
+		// if (TpsPlayerController)
+		// {
+		// 	HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
+		// }
+		// the above code is commented because this cast is failing on the server, I've removed from begin play and added to
+		// equip weapon function
 
 		if (Character->HasAuthority())
 		{
@@ -85,7 +86,7 @@ void UCombatComponent::SetHUDCrosshairs(const float DeltaTime) {
 
 	CrosshairShootingFactor = FMath::FInterpTo(CrosshairShootingFactor, 0.f, DeltaTime, 30.f);
 	
-	HUDPackage.CrosshairSpread = 0.4f + // baseline value
+	HUDPackage.CrosshairSpread = 0.8f + // baseline value
 		CrosshairVelocityFactor -
 		CrosshairAimingFactor +
 		CrosshairShootingFactor;
@@ -115,6 +116,7 @@ bool UCombatComponent::CanFire() const
 void UCombatComponent::Fire() {
 	if (!CanFire()) return;
 	bCanFire = false;
+	
 	FHitResult HitResult;
 	TraceUnderCrosshairs(HitResult);
 		
@@ -123,7 +125,7 @@ void UCombatComponent::Fire() {
 	const FRotator TargetRotation = ToTarget.Rotation();
 	// the above code is taking care of the muzzle socket location and sending it down the line of fire, so the server have an accurate position
 	// of the socket in order to spawn the projectile in the correct position on all clients
-		
+
 	ServerFire(HitResult.ImpactPoint, ProjectileSpawnLocation, TargetRotation);
 
 	CrosshairShootingFactor = 1.f;
@@ -279,6 +281,11 @@ void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult) const {
 			ECC_Visibility
 		);
 
+		if (!TraceHitResult.bBlockingHit)
+		{
+			TraceHitResult.ImpactPoint = End;
+		}
+
 		// if (TraceHitResult.GetActor() && TraceHitResult.GetActor()->Implements<UCrosshairInteractionInterface>())
 		// {
 		// 	HUDPackage.CrosshairColor = FLinearColor::Red;
@@ -351,9 +358,12 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip) {
 	}
 	
 	TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController;
+
 	if (TpsPlayerController)
 	{
 		TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
+
+		HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
 	}
 }
 
@@ -395,7 +405,8 @@ void UCombatComponent::OnRep_CarryingAmmo()
 
 void UCombatComponent::InitializeCarryingAmmo()
 {
-	CarryingAmmoMap.Emplace(EWeaponType::EWT_Rifle, StartingAmmo);
+	CarryingAmmoMap.Emplace(EWeaponType::EWT_Rifle, Starting_AR_Ammo);
+	CarryingAmmoMap.Emplace(EWeaponType::EWT_Pistol, Starting_Pistol_Ammo);
 }
 
 

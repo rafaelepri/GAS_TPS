@@ -2,9 +2,11 @@
 
 #include "Character/TpsCharacterBase.h"
 #include "GameFramework/PlayerStart.h"
+#include "GameState/MainGameState.h"
 #include "Kismet/GameplayStatics.h"
 #include "PlayerState/MainPlayerState.h"
 #include "PlayerController/TpsPlayerController.h"
+
 
 namespace MatchState
 {
@@ -73,9 +75,12 @@ void AMainGameMode::PlayerEliminated(ATPSCharacterBase* EliminatedCharacter,
 	AMainPlayerState* KillerPlayerState = KillerController ? Cast<AMainPlayerState>(KillerController->PlayerState) : nullptr;
 	AMainPlayerState* VictimPlayerState = VictimController ? Cast<AMainPlayerState>(VictimController->PlayerState) : nullptr;
 
-	if (KillerPlayerState && KillerPlayerState != VictimPlayerState)
+	AMainGameState* MainGameState = GetGameState<AMainGameState>();
+
+	if (KillerPlayerState && KillerPlayerState != VictimPlayerState && MainGameState)
 	{
 		KillerPlayerState->UpdateScore(1.f);
+		MainGameState->UpdateTopScore(KillerPlayerState);
 	}
 
 	if (VictimPlayerState)

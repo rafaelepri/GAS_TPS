@@ -901,7 +901,10 @@ void ATPSCharacterBase::MulticastEliminated_Implementation()
 
 	// Disable Character Movement
 	bDisableGameplay = true;
-	
+	if (Combat)
+	{
+		Combat->FireButtonPressed(false);
+	}
 	// Disable Collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
