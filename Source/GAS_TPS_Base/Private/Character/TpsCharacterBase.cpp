@@ -151,8 +151,9 @@ void ATPSCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(ATPSCharacterBase, CharacterWeaponState);
 	DOREPLIFETIME_CONDITION(ATPSCharacterBase, OverlappingWeapon, COND_OwnerOnly);
 	DOREPLIFETIME_CONDITION(ATPSCharacterBase, TraversalResult, COND_SkipOwner);
-
 	DOREPLIFETIME(ATPSCharacterBase, Health);
+	DOREPLIFETIME(ATPSCharacterBase, bDisableGameplay);
+
 }
 
 void ATPSCharacterBase::PostInitializeComponents() {
@@ -233,6 +234,7 @@ void ATPSCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 
 void ATPSCharacterBase::Move(const FInputActionValue& Value) {
+	if (bDisableGameplay) return;
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr) {
@@ -277,6 +279,7 @@ void ATPSCharacterBase::ToggleWalk(const FInputActionValue& Value) {
 }
 
 void ATPSCharacterBase::ToggleCrouch(const FInputActionValue& Value) {
+	if (bDisableGameplay) return;
 	if (!bIsCrouched && !CharacterInputState.bWantsToSprint) {
 		Crouch();
 	}
@@ -286,6 +289,8 @@ void ATPSCharacterBase::ToggleCrouch(const FInputActionValue& Value) {
 }
 
 void ATPSCharacterBase::StartSprint() {
+	if (bDisableGameplay) return;
+	
 	if (bIsCrouched) {
 		UnCrouch();
 	}
@@ -306,6 +311,8 @@ void ATPSCharacterBase::EndSprint() {
 }
 
 void ATPSCharacterBase::StartAiming() {
+	if (bDisableGameplay) return;
+	
 	CharacterInputState.bWantsToWalk = true;
 	CharacterInputState.bWantsToAim = true;
 	CharacterInputState.bWantsToStrafe = false;
@@ -324,6 +331,8 @@ void ATPSCharacterBase::EndAiming() {
 }
 
 void ATPSCharacterBase::PickUpAction() {
+	if (bDisableGameplay) return;
+	
 	if (Combat) {
 		if (HasAuthority()) {
 			Combat->EquipWeapon(OverlappingWeapon);
@@ -334,6 +343,8 @@ void ATPSCharacterBase::PickUpAction() {
 }
 
 void ATPSCharacterBase::StartFiring() {
+	if (bDisableGameplay) return;	
+	
 	if (Combat) {
 		Combat->FireButtonPressed(true);
 	}
@@ -346,6 +357,8 @@ void ATPSCharacterBase::EndFiring() {
 }
 
 void ATPSCharacterBase::Reload_Action() {
+	if (bDisableGameplay) return;
+	
 	if (Combat)
 	{
 		Combat->Reload();
@@ -521,7 +534,7 @@ void ATPSCharacterBase::OnMontageCompleted(const bool Value) {
 ///
 
 void ATPSCharacterBase::StartTraversalAction() {
-	if (DoingTraversalAction) return;
+	if (DoingTraversalAction || bDisableGameplay) return;
 	if (!GetCharacterMovement()->IsMovingOnGround()) return;
 
 
@@ -884,14 +897,13 @@ void ATPSCharacterBase::MulticastEliminated_Implementation()
 	}
 	
 	bIsEliminated = true;
-	// handle animation here
+	// handle animation here or toggle ragdoll
 
 	// Disable Character Movement
-	GetCharacterMovement()->DisableMovement();
-	GetCharacterMovement()->StopMovementImmediately();
-	if (TpsPlayerController)
+	bDisableGameplay = true;
+	if (Combat)
 	{
-		DisableInput(TpsPlayerController);
+		Combat->FireButtonPressed(false);
 	}
 	// Disable Collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);

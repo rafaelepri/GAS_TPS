@@ -24,9 +24,12 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	void EquipWeapon(AWeapon* WeaponToEquip);
+
+	void FireButtonPressed(const bool bPressed);
 protected:
 	virtual void BeginPlay() override;
 
+	
 	UFUNCTION()
 	void OnRep_EquippedWeapon() const;
 
@@ -39,6 +42,8 @@ protected:
 
 	void SetHUDCrosshairs(const float DeltaTime);
 private:
+	
+	
 	UPROPERTY()
 	ATPSCharacterBase* Character;
 
@@ -63,12 +68,13 @@ private:
 
 	TMap<EWeaponType, int32> CarryingAmmoMap;
 	UPROPERTY(EditAnywhere)
-	int32 StartingAmmo = 30;
+	int32 Starting_AR_Ammo = 120;
+	UPROPERTY(EditAnywhere)
+	int32 Starting_Pistol_Ammo = 42;
 	void InitializeCarryingAmmo();
 
 	bool CanFire() const;
 	void Fire();
-	void FireButtonPressed(const bool bPressed);
 	bool bFireButtonPressed;
 
 

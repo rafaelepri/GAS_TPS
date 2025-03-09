@@ -11,7 +11,10 @@
 #include "GameMode/MainGameMode.h"
 #include "HUD/Widget/Announcement.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/CombatComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "GameState/MainGameState.h"
+#include "PlayerState/MainPlayerState.h"
 
 void ATpsPlayerController::BeginPlay()
 {
@@ -315,6 +318,16 @@ void ATpsPlayerController::OnMatchStart()
 
 void ATpsPlayerController::OnMatchEnd()
 {
+	if (ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>( GetPawn()))
+	{
+		CharacterBase->bDisableGameplay = true;
+
+		if (CharacterBase->GetCombatComponent())
+		{
+			CharacterBase->GetCombatComponent()->FireButtonPressed(false);
+		}
+	}
+	
 	TpsHUD = !TpsHUD ? Cast<ATpsHUD>(GetHUD()) : TpsHUD;
 	if (TpsHUD)
 	{
@@ -324,7 +337,41 @@ void ATpsPlayerController::OnMatchEnd()
 			TpsHUD->AnnouncementOverlay->SetVisibility(ESlateVisibility::Visible);
 			const FString AnnouncementText("New Match Starts In: ");
 			TpsHUD->AnnouncementOverlay->AnnouncementText->SetText(FText::FromString(AnnouncementText));
-			TpsHUD->AnnouncementOverlay->InfoText->SetVisibility(ESlateVisibility::Hidden);
+
+
+			const AMainGameState* MainGameState = Cast<AMainGameState>(UGameplayStatics::GetGameState(this));
+			const AMainPlayerState* MainPlayerState = GetPlayerState<AMainPlayerState>();
+
+			if (MainGameState && MainPlayerState)
+			{
+				
+				FString InfoTextString;
+				
+				TArray<AMainPlayerState*> TopPlayers = MainGameState->TopScoringPlayers;
+				if (TopPlayers.Num() == 0)
+				{
+					InfoTextString = FString("There is no winner.");
+				}
+				else if (TopPlayers.Num() == 1 && TopPlayers[0] == MainPlayerState)
+				{
+					InfoTextString = FString("You are the winner!");
+				}
+				else if (TopPlayers.Num() == 1)
+				{
+					InfoTextString = FString::Printf(TEXT("Winner: \n%s"), *TopPlayers[0]->GetPlayerName());
+				} else
+				{
+					InfoTextString = FString("Players tied for the win: \n");
+					for (auto const TiedPlayer : TopPlayers)
+					{
+						InfoTextString.Append(FString::Printf(TEXT("%s"), *TiedPlayer->GetPlayerName()));
+					}
+				}
+				
+
+				TpsHUD->AnnouncementOverlay->InfoText->SetText(FText::FromString(InfoTextString));
+			}
+			
 		}
 	}
 }

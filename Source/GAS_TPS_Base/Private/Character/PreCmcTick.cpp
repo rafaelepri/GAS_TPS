@@ -18,7 +18,7 @@ void UPreCmcTick::TickComponent(const float DeltaTime, const ELevelTick TickType
 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (CharacterBase) {
+	if (CharacterBase && !CharacterBase->bDisableGameplay) {
 		CharacterBase->UpdateRotation_PreCmc();
 		CharacterBase->UpdateMovement_PreCmc();
 		CharacterBase->UpdateCamera_PreCmc(true);

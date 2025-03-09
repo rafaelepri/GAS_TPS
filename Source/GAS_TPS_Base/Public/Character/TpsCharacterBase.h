@@ -209,6 +209,9 @@ public:
 	void EndFiring();
 	void Reload_Action();
 
+	UPROPERTY(Replicated)
+	bool bDisableGameplay = false;
+
 	/////////////////////////////////////////////////////////// MOVEMENT HELPER FUNCTIONS
 	///
 	UFUNCTION(BlueprintPure, Category="Movement|HelperFn")
@@ -395,6 +398,7 @@ public:
 	FORCEINLINE float GetHealth() const { return Health; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	ECombatState GetCombatState() const;
+	FORCEINLINE UCombatComponent* GetCombatComponent() const { return Combat; }
 };
 
 

@@ -364,7 +364,6 @@ public:
 	float SpineInterpSpeed = 20.f; // Adjust for smoothness (higher = faster)
 
 
-	//
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsReloading;
 };
