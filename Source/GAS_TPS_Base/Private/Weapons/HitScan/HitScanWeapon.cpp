@@ -5,6 +5,8 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "Character/TpsCharacterBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Sound/SoundCue.h"
 
 AHitScanWeapon::AHitScanWeapon()
 {
@@ -30,14 +32,13 @@ void AHitScanWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVect
 	if (OwnerPawn == nullptr) return;
 	AController* InstigatorController = OwnerPawn->GetController();
  
-	const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleSocket");
-	if (MuzzleFlashSocket && InstigatorController)
+	if (const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleSocket"))
 	{
 		const FTransform SocketTransform = MuzzleFlashSocket->GetSocketTransform(GetWeaponMesh());
 		const FVector Start = SocketTransform.GetLocation();
 		const FVector End = Start + (TraceHitTarget - Start) * 1.25f; // extends the trace after the hit so we always have accurate hit
 
-		if (const UWorld* World = GetWorld())
+		if (UWorld* World = GetWorld())
 		{
 			FHitResult FireHit;
 			
@@ -48,20 +49,53 @@ void AHitScanWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVect
 				ECC_Visibility
 			);
 
+			FVector BeamEnd = End;
+
 			if (FireHit.bBlockingHit)
 			{
-				if (ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>(FireHit.GetActor()))
-				{
-					if (HasAuthority())
-					{
-						UGameplayStatics::ApplyDamage(CharacterBase, Damage, InstigatorController, this, UDamageType::StaticClass());
-					}
+				BeamEnd = FireHit.ImpactPoint;
 
-					if (ImpactParticles)
-					{
-						UGameplayStatics::SpawnEmitterAtLocation(World, ImpactParticles, FireHit.ImpactPoint, FireHit.ImpactNormal.Rotation());
-					}
+				ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>(FireHit.GetActor());
+				if (CharacterBase && HasAuthority() && InstigatorController)
+				{
+					UGameplayStatics::ApplyDamage(CharacterBase, Damage, InstigatorController, this, UDamageType::StaticClass());
 				}
+
+				if (HitSound)
+				{
+					UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, FireHit.ImpactPoint);
+				}
+			}
+
+			if (ImpactParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(World, ImpactParticles, FireHit.ImpactPoint, FireHit.ImpactNormal.Rotation());
+			}
+			
+			if (BeamParticles)
+			{
+				if (UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(World, BeamParticles, SocketTransform))
+				{
+					Beam->SetVectorParameter(FName("Target"), BeamEnd);
+				}
+			}
+
+			if (MuzzleFlashParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(
+					World,
+					MuzzleFlashParticles,
+					SocketTransform
+				);
+			}
+
+			if (FireSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(
+					this,
+					FireSound,
+					GetActorLocation()
+				);
 			}
 		}
 	}

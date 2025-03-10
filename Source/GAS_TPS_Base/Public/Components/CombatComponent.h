@@ -31,7 +31,7 @@ protected:
 
 	
 	UFUNCTION()
-	void OnRep_EquippedWeapon() const;
+	void OnRep_EquippedWeapon();
 
 	UFUNCTION(Server, Reliable)
 	void ServerFire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation);
@@ -71,6 +71,8 @@ private:
 	int32 Starting_AR_Ammo = 120;
 	UPROPERTY(EditAnywhere)
 	int32 Starting_Pistol_Ammo = 42;
+	UPROPERTY(EditAnywhere)
+	int32 Starting_Smg_Ammo = 42;
 	void InitializeCarryingAmmo();
 
 	bool CanFire() const;

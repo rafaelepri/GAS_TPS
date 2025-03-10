@@ -13,27 +13,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3e67ba9-22bc-4338-99e1-d0b713455d3e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Core/Blueprints/BP_MainGameState.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanWeapon.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/Casings/BP_PistolCasing.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/GameState/MainGameState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/GameState/MainGameState.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_001_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_002_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_003_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_004_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_005_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_006_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_spent_001_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_spent_002_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_spent_003_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/45ACP_spent_45ACP_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/BPP_Thompson.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/FireSelector.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/M1A1_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/Material/45ACP.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/Material/M1A1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/Material/platform.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/NewMap.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/NewMap1.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SK_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SM_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/Test/BPP_NewMap1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/bolt_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/magRelease_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/mag_001_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/mag_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/platform_plank_platform_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/safety_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/stock_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/45ACP_baseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/45ACP_metallicRoughness.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/45ACP_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/M1A1_baseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/M1A1_metallicRoughness.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/M1A1_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/platform_baseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/platform_metallicRoughness.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/textures/platform_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/trigger_M1A1_0.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanPistol.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/2/CQ/ZHOJ5DARMCRSYM780POMXQ.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/2/I3/3BUYTJ1F7EDEPILCPS6ANE.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/3/V1/XJVVONZ8DG4C4ZJMIYUXYB.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/4/2B/4SB26Q52V0892LTE6VHGHI.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/9/TC/Y9PL19KKLREGOKPUWK3DNP.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/A/JD/J4C9WYYSCHNDQQ1JGB996N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/D/18/ALIYQWGKSV4SP91EL0T6CO.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Assets/Thompson/NewMap1/D/8Z/NI7IM8D3KCZC9641MCA32W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/FPS_Assault_Pack/Meshes/Rifle/SK_Rifle_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/FPS_Assault_Pack/Meshes/Rifle/SK_Rifle_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Character/Blueprints/ABP_TpsCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Blueprints/ABP_TpsCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Animations/Overlay/Pistol/PistolReloadAnimationforUEFNCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Animations/Overlay/Pistol/PistolReloadAnimationforUEFNCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/BP_MainGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/BP_MainGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/UltimateWeaponSoundFX/Weapon/Cue/Pistol_50c_Fire_01_Cue.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/UltimateWeaponSoundFX/Weapon/Cue/Pistol_50c_Fire_01_Cue.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SK_UEFN_Mannequin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SK_UEFN_Mannequin.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanWeapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanWeapon.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/Casings/BP_PistolCasing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/Casings/BP_PistolCasing.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/GameStartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/GameStartupMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/SKM_StaticMeshTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SKM_StaticMeshTest.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/SK_StaticMeshTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SK_StaticMeshTest.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/GameMode/MainGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/GameMode/MainGameMode.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +254,10 @@
       <workItem from="1741434913365" duration="5669000" />
       <workItem from="1741455215348" duration="10691000" />
       <workItem from="1741524745740" duration="4465000" />
-      <workItem from="1741543136842" duration="2137000" />
+      <workItem from="1741543136842" duration="4216000" />
+      <workItem from="1741557999863" duration="72000" />
+      <workItem from="1741558086949" duration="2667000" />
+      <workItem from="1741605445581" duration="5901000" />
     </task>
     <servers />
   </component>

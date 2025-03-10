@@ -345,6 +345,16 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip) {
 				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
 			}
 			break;
+
+	case EWeaponType::EWT_SMG:
+		Character->CharacterWeaponState.bHasMelee = false;
+		Character->CharacterWeaponState.bHasPistol = false;
+		Character->CharacterWeaponState.bHasRifle = true;
+			
+		if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_SMG"))) {
+			RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
+		}
+		break;
 		default:
 			break;
 	}
@@ -367,7 +377,7 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip) {
 	}
 }
 
-void UCombatComponent::OnRep_EquippedWeapon() const {
+void UCombatComponent::OnRep_EquippedWeapon() {
 	if (EquippedWeapon && Character) {
 		EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 
@@ -387,8 +397,26 @@ void UCombatComponent::OnRep_EquippedWeapon() const {
 				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
 			}
 			break;
+		case EWeaponType::EWT_SMG:
+			Character->CharacterWeaponState.bHasMelee = false;
+			Character->CharacterWeaponState.bHasPistol = false;
+			Character->CharacterWeaponState.bHasRifle = true;
+			
+			if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_SMG"))) {
+				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
+			}
+			break;	
 		default:
 			break;
+		}
+
+		TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController;
+
+		if (TpsPlayerController)
+		{
+			TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
+
+			HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
 		}
 	}
 }
@@ -407,6 +435,7 @@ void UCombatComponent::InitializeCarryingAmmo()
 {
 	CarryingAmmoMap.Emplace(EWeaponType::EWT_Rifle, Starting_AR_Ammo);
 	CarryingAmmoMap.Emplace(EWeaponType::EWT_Pistol, Starting_Pistol_Ammo);
+	CarryingAmmoMap.Emplace(EWeaponType::EWT_SMG, Starting_Smg_Ammo);
 }
 
 
