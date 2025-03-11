@@ -19,21 +19,35 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-public:
-	virtual void Tick(float DeltaTime) override;
+	FVector TraceEndWithScatter(const FVector& TraceStart, const FVector& HitTarget);
+	void WeaponTraceHit(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, FHitResult& OutHit);
 
-private:
 	UPROPERTY(EditAnywhere)
-	float Damage = 20.f;
-	
+	USoundCue* FireSound;
+	UPROPERTY(EditAnywhere)
+	USoundCue* HitSound;
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* ImpactParticles;
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* BeamParticles;
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* MuzzleFlashParticles;
+
 	UPROPERTY(EditAnywhere)
-	USoundCue* FireSound;
-	UPROPERTY(EditAnywhere)
-	USoundCue* HitSound;
+	float Damage = 20.f;
+public:
+	virtual void Tick(float DeltaTime) override;
+
+private:
+	/*
+	 **
+	 *    Trace end with scatter;
+	 */
+
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	float DistanceToSphere = 800.f;
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	float SphereRadius = 75.f;
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	bool bUseScatter = false;
 };

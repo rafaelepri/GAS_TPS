@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Sound/SoundCue.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "DrawDebugHelpers.h"
 
 AHitScanWeapon::AHitScanWeapon()
 {
@@ -17,6 +19,7 @@ void AHitScanWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 }
+
 
 void AHitScanWeapon::Tick(float DeltaTime)
 {
@@ -36,48 +39,26 @@ void AHitScanWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVect
 	{
 		const FTransform SocketTransform = MuzzleFlashSocket->GetSocketTransform(GetWeaponMesh());
 		const FVector Start = SocketTransform.GetLocation();
-		const FVector End = Start + (TraceHitTarget - Start) * 1.25f; // extends the trace after the hit so we always have accurate hit
+
+		FHitResult FireHit;
+		WeaponTraceHit(TraceHitTarget, Start, FireHit);
+
+		ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>(FireHit.GetActor());
+		if (CharacterBase && HasAuthority() && InstigatorController)
+		{
+			UGameplayStatics::ApplyDamage(CharacterBase, Damage, InstigatorController, this, UDamageType::StaticClass());
+		}
 
 		if (UWorld* World = GetWorld())
 		{
-			FHitResult FireHit;
-			
-			World->LineTraceSingleByChannel(
-				FireHit,
-				Start,
-				End,
-				ECC_Visibility
-			);
-
-			FVector BeamEnd = End;
-
-			if (FireHit.bBlockingHit)
-			{
-				BeamEnd = FireHit.ImpactPoint;
-
-				ATPSCharacterBase* CharacterBase = Cast<ATPSCharacterBase>(FireHit.GetActor());
-				if (CharacterBase && HasAuthority() && InstigatorController)
-				{
-					UGameplayStatics::ApplyDamage(CharacterBase, Damage, InstigatorController, this, UDamageType::StaticClass());
-				}
-
-				if (HitSound)
-				{
-					UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, FireHit.ImpactPoint);
-				}
-			}
-
 			if (ImpactParticles)
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(World, ImpactParticles, FireHit.ImpactPoint, FireHit.ImpactNormal.Rotation());
 			}
 			
-			if (BeamParticles)
+			if (HitSound)
 			{
-				if (UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(World, BeamParticles, SocketTransform))
-				{
-					Beam->SetVectorParameter(FName("Target"), BeamEnd);
-				}
+				UGameplayStatics::PlaySoundAtLocation(this, HitSound, FireHit.ImpactPoint);
 			}
 
 			if (MuzzleFlashParticles)
@@ -88,16 +69,62 @@ void AHitScanWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVect
 					SocketTransform
 				);
 			}
+		}
+	}
+}
 
-			if (FireSound)
+void AHitScanWeapon::WeaponTraceHit(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, FHitResult& OutHit)
+{
+	if (const UWorld* World = GetWorld())
+	{
+		const FVector End = bUseScatter ?
+			TraceEndWithScatter(ProjectileSpawnLocation, TraceHitTarget ) :
+			ProjectileSpawnLocation + (TraceHitTarget - ProjectileSpawnLocation) * 1.25f; // extends the trace after the hit so we always have accurate hit
+
+		World->LineTraceSingleByChannel(
+		OutHit,
+		ProjectileSpawnLocation,
+		End,
+		ECC_Visibility
+		);
+
+		FVector BeamEnd = End;
+
+		if (OutHit.bBlockingHit)
+		{
+			BeamEnd = OutHit.ImpactPoint;
+		}
+
+		if (BeamParticles)
+		{
+			if (UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(World, BeamParticles, ProjectileSpawnLocation))
 			{
-				UGameplayStatics::PlaySoundAtLocation(
-					this,
-					FireSound,
-					GetActorLocation()
-				);
+				Beam->SetVectorParameter(FName("Target"), BeamEnd);
 			}
 		}
 	}
 }
+
+FVector AHitScanWeapon::TraceEndWithScatter(const FVector& TraceStart, const FVector& HitTarget)
+{
+	const FVector ToTargetNormalized = (HitTarget - TraceStart).GetSafeNormal();
+	const FVector SphereCenter = TraceStart + ToTargetNormalized * DistanceToSphere;
+	const FVector RandomVector = UKismetMathLibrary::RandomUnitVector() * FMath::FRandRange(0.f, SphereRadius);
+	const FVector EndLocation = SphereCenter + RandomVector;
+	const FVector ToEndLocation = EndLocation - TraceStart;
+	
+	// DrawDebugSphere(GetWorld(), SphereCenter, SphereRadius, 12, FColor::Red, true);
+	// DrawDebugSphere(GetWorld(), EndLocation , 4.f, 24, FColor::Orange, true);
+	// DrawDebugLine(
+	// 	GetWorld(),
+	// 	TraceStart,
+	// 	FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size()),
+	// 	FColor::Green,
+	// 	true
+	// );
+
+	return FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size());
+}
+
+
 
