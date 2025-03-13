@@ -107,6 +107,23 @@ void UCombatComponent::FireButtonPressed(const bool bPressed) {
 	}	
 }
 
+void UCombatComponent::PickupAmmo(const EWeaponType WeaponType,const int32 AmmoAmount)
+{
+	if (!CarryingAmmoMap.Contains(WeaponType))
+	{
+		CarryingAmmoMap.Add(WeaponType, 0);
+	}
+
+	CarryingAmmoMap[WeaponType] += AmmoAmount;
+	CarryingAmmo = CarryingAmmoMap[WeaponType];
+	UpdateAmmoValues(false);
+
+	if (EquippedWeapon && EquippedWeapon->IsEmpty() && EquippedWeapon->GetWeaponType() == WeaponType)
+	{
+		Reload();
+	}
+}
+
 bool UCombatComponent::CanFire() const
 {
 	if (EquippedWeapon->IsEmpty() || !bCanFire || CombatState == ECombatState::ECS_Reloading) return false;
@@ -189,7 +206,7 @@ void UCombatComponent::OnReloadCompleted()
 	if (Character && Character->HasAuthority() && CombatState == ECombatState::ECS_Reloading)
 	{
 		CombatState = ECombatState::ECS_Unoccupied;
-		UpdateAmmoValues();
+		UpdateAmmoValues(true);
 	}
 
 	if (bFireButtonPressed)
@@ -204,7 +221,7 @@ int32 UCombatComponent::AmountToReload()
 
 	if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
 	{
-		const int32 CarryingAmount = 	CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
+		const int32 CarryingAmount = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
 		const int32 Least = FMath::Min(RoomInMag, CarryingAmount);
 		return FMath::Clamp(RoomInMag, 0, Least);
 	}
@@ -212,21 +229,30 @@ int32 UCombatComponent::AmountToReload()
 	return 0;
 }
 
-void UCombatComponent::UpdateAmmoValues()
+void UCombatComponent::UpdateAmmoValues(const bool bIsReloading)
 {
-	const int32 ReloadAmount = AmountToReload();
-	if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
-	{
-		CarryingAmmoMap[EquippedWeapon->GetWeaponType()] -= ReloadAmount;
-		CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
-	}
 
 	TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController; 	
 	if (TpsPlayerController)
 	{
-		TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
+		if (bIsReloading)
+		{
+			const int32 ReloadAmount = AmountToReload();
+			if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
+			{
+				CarryingAmmoMap[EquippedWeapon->GetWeaponType()] -= ReloadAmount;
+				CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
+
+				EquippedWeapon->AddAmmo(-ReloadAmount);
+			}
+		}
+		
+		if (EquippedWeapon)
+		{
+			TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
+		}
 	}
-	EquippedWeapon->AddAmmo(-ReloadAmount);
+	
 }
 
 void UCombatComponent::OnRep_CombatState()

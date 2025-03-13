@@ -69,6 +69,15 @@ void AHitScanWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVect
 					SocketTransform
 				);
 			}
+
+			if (FireSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(
+					this,
+					FireSound,
+					Start
+				);
+			}
 		}
 	}
 }

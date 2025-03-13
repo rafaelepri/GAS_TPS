@@ -24,6 +24,8 @@ public:
 	void EquipWeapon(AWeapon* WeaponToEquip);
 
 	void FireButtonPressed(const bool bPressed);
+
+	void PickupAmmo(const EWeaponType WeaponType,const int32 AmmoAmount);
 protected:
 	virtual void BeginPlay() override;
 
@@ -89,7 +91,7 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnReloadCompleted();
 	int32 AmountToReload();
-	void UpdateAmmoValues();
+	void UpdateAmmoValues(const bool bIsReloading);
 
 	/* *
 	 *   HUD and Crosshairs

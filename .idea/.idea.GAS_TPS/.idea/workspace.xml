@@ -12,118 +12,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3e67ba9-22bc-4338-99e1-d0b713455d3e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/870.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Materials/12gauge_federal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Materials/12gauge_hornady.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Materials/R870.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Object_2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Object_3.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Object_4.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/SKM_870.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/SK_870.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/12gauge_federal_baseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/12gauge_federal_metallicRoughness.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/12gauge_federal_normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/12gauge_hornady_baseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/12gauge_hornady_normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/R870_baseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/R870_emissive.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/R870_metallicRoughness.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Shotguns/870/Textures/R870_normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2_Physics.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/L96.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/dropped.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/dropped_weapons_models_glock18_weapon_pist_glock18_vmdl_c.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/dropped_weapons_models_glock18_weapon_pist_glock18_vmdl_c_001.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_draw.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_draw_weapons_models_glock18_weapon_pist_glock18.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_draw_weapons_models_glock18_weapon_pist_glock18_vmd.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_idle.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_idle_weapons_models_glock18_weapon_pist_glock18.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_idle_weapons_models_glock18_weapon_pist_glock18_vmd.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_end.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_end_weapons_models_glock18_weapon_pist.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_end_weapons_models_glock18_weapon_pist_glo.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_loop.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_loop_weapons_models_glock18_weapon_pis.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_loop_weapons_models_glock18_weapon_pist_gl.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_start.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_start_weapons_models_glock18_weapon_pi.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_start_weapons_models_glock18_weapon_pist_g.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_weapons_models_glock18_weapon_pist_glo.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_lookat01_weapons_models_glock18_weapon_pist_glock18.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_reload.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_reload_weapons_models_glock18_weapon_pist_glock.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_reload_weapons_models_glock18_weapon_pist_glock18_v.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1_additive.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1_additive_weapons_models_glock18_weapon_p.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1_additive_weapons_models_glock18_weapon_pist_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1_weapons_models_glock18_weapon_pist_glock.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot1_weapons_models_glock18_weapon_pist_glock18_v.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot_empty_additive_weapons_models_glock18_wea.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot_empty_additive_weapons_models_glock18_weapon_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot_empty_weapons_models_glock18_weapon_pist_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/firstperson_shoot_empty_weapons_models_glock18_weapon_pist_gloc.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/holstered.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/holstered_weapons_models_glock18_weapon_pist_glock18_vmdl_c.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/holstered_weapons_models_glock18_weapon_pist_glock18_vmdl_c_001.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_icon.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_icon_weapons_models_glock18_weapon_pist_glock18_v.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_icon_weapons_models_glock18_weapon_pist_glock18_vmdl_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_inspect.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_inspect_weapons_models_glock18_weapon_pist_glock1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/inventory_inspect_weapons_models_glock18_weapon_pist_glock18_vm.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_PhysicsAsset.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_Skeleton.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_crouch_rifl_deploy.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_catch_weapons_models_glock18_weapon_pist_glock18_vm.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_catch_weapons_models_glock18_weapon_pist_glock18_vmdl_c.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_02_weapons_models_glock18_weapon_pist_glock1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_02_weapons_models_glock18_weapon_pist_glock18_vm.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_03_weapons_models_glock18_weapon_pist_glock1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_03_weapons_models_glock18_weapon_pist_glock18_vm.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_weapons_models_glock18_weapon_pist_glock18_v.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_deploy_weapons_models_glock18_weapon_pist_glock18_vmdl_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_firing_weapons_models_glock18_weapon_pist_glock18_v.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_firing_weapons_models_glock18_weapon_pist_glock18_vmdl_.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_stand_reload_weapons_models_glock18_weapon_pist_glo.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_pstl_stand_reload_weapons_models_glock18_weapon_pist_glock18.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_rifl_catch.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_rifl_deploy.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_rifl_deploy_02.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_rifl_deploy_03.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_snip_crouch_firing_additive.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_snip_firing_additive.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/sh_snip_stand_reload.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/tools_preview.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/tools_preview_weapons_models_glock18_weapon_pist_glock18_vm.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/tools_preview_weapons_models_glock18_weapon_pist_glock18_vmdl_c.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/weapon_snip_awp.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/weapon_snip_awp_baseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/weapon_snip_awp_metallicRoughness.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/weapon_snip_awp_normal.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_Shotgun.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/Casings/BP_ShotgunCasing.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Core/Weapons/Sniper/BP_Sniper.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/Shotgun/Shotgun.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/Shotgun/Shotgun.h" afterDir="false" />
+    <list default="true" id="b527afb8-66ee-40c5-bd20-4e88b0a15903" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/PickupBase.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/Ammo/AmmoPickup.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/PickupBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Assets/Thompson/SK_MERGED_BPP_NewMap1_C_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SK_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SK_UEFN_Mannequin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/UEFN_Mannequin/Meshes/SK_UEFN_Mannequin.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Weapons/L96/L96.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/L96.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/BP_Pistol.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/BP_Rifle.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanPistol.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanPistol.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/GameStartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/GameStartupMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_Shotgun.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_Shotgun.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/Sniper/BP_Sniper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/Sniper/BP_Sniper.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UWSFX.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,26 +51,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Editor/Experimental/EditorInteractiveToolsFramework/Public/EdModeInteractiveToolsContext.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Editor/Experimental/EditorInteractiveToolsFramework/Public/EditorInteractiveGizmoManager.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Programs/AutomationTool/AutomationUtils/ImageUtils.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Programs/AutomationTool/BuildGraph/.editorconfig" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Programs/AutomationTool/TVOS/TVOS.Automation.csproj" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Runtime/Engine/Classes/GameFramework/GameMode.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Runtime/Engine/Private/GameplayStatics.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://C:/UE5/UE_5.5/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/ProjectileBullet.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/ProjectileBullet.h" root0="FORCE_HIGHLIGHTING" />
-  </component>
-  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2tjCebLj5YWfTdnhu3pgC7Eahh9" />
+  <component name="ProjectId" id="2uDTcv47pEkZ3WfWBc3t6Mttg2q" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -276,47 +176,20 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f3e67ba9-22bc-4338-99e1-d0b713455d3e" name="Changes" comment="" />
-      <created>1740856194647</created>
+      <changelist id="b527afb8-66ee-40c5-bd20-4e88b0a15903" name="Changes" comment="" />
+      <created>1741782229226</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1740856194647</updated>
-      <workItem from="1740856196131" duration="5551000" />
-      <workItem from="1740866890881" duration="7610000" />
-      <workItem from="1740912985822" duration="2535000" />
-      <workItem from="1740918622150" duration="3959000" />
-      <workItem from="1740937854387" duration="2258000" />
-      <workItem from="1740961524031" duration="1926000" />
-      <workItem from="1741000717915" duration="1010000" />
-      <workItem from="1741007556304" duration="6628000" />
-      <workItem from="1741029381687" duration="3433000" />
-      <workItem from="1741038081790" duration="986000" />
-      <workItem from="1741090358089" duration="1544000" />
-      <workItem from="1741092903284" duration="17990000" />
-      <workItem from="1741174133979" duration="16528000" />
-      <workItem from="1741211128775" duration="8036000" />
-      <workItem from="1741310019202" duration="1039000" />
-      <workItem from="1741347040706" duration="19132000" />
-      <workItem from="1741389951470" duration="2485000" />
-      <workItem from="1741434913365" duration="5669000" />
-      <workItem from="1741455215348" duration="10691000" />
-      <workItem from="1741524745740" duration="4465000" />
-      <workItem from="1741543136842" duration="4216000" />
-      <workItem from="1741557999863" duration="72000" />
-      <workItem from="1741558086949" duration="2667000" />
-      <workItem from="1741605445581" duration="5901000" />
-      <workItem from="1741614303710" duration="6519000" />
-      <workItem from="1741644055444" duration="1275000" />
-      <workItem from="1741651278246" duration="3210000" />
-      <workItem from="1741691965611" duration="395000" />
-      <workItem from="1741692377384" duration="13247000" />
+      <updated>1741782229226</updated>
+      <workItem from="1741782231661" duration="11752000" />
+      <workItem from="1741812079339" duration="1285000" />
+      <workItem from="1741867538252" duration="126000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
