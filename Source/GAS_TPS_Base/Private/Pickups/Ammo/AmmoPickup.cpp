@@ -5,7 +5,6 @@
 #include "Character/TpsCharacterBase.h"
 #include "Components/CombatComponent.h"
 
-
 AAmmoPickup::AAmmoPickup()
 {
 	PrimaryActorTick.bCanEverTick = false;

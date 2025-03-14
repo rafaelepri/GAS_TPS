@@ -32,7 +32,8 @@ public class GAS_TPS_Base : ModuleRules
                 "BlendStack",
                 "MotionTrajectory",
                 "AIModule", 
-                "UMG"
+                "UMG",
+                "Niagara"
             }
         );
     }

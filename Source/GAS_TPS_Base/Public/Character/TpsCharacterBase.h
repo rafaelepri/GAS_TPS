@@ -347,6 +347,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
 	UCombatComponent* Combat;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
+	class UBuffComponent* Buff; 
 	
 	UPROPERTY(Replicated, EditAnyWhere, BlueprintReadOnly, Category = "Data")
 	FCharacterWeaponState CharacterWeaponState;
@@ -373,7 +376,7 @@ public:
 	float Health = MaxHealth;
 
 	UFUNCTION()
-	void OnRep_Health();
+	void OnRep_Health(const float LastHealthValue);
 	void HandleHUDHealth();
 	
 	UFUNCTION()
@@ -396,9 +399,11 @@ protected:
 	
 public:
 	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE void SetHealth(const float HealthAmount) { Health = HealthAmount; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	ECombatState GetCombatState() const;
 	FORCEINLINE UCombatComponent* GetCombatComponent() const { return Combat; }
+	FORCEINLINE UBuffComponent* GetBuffComponent() const { return Buff; }
 };
 
 

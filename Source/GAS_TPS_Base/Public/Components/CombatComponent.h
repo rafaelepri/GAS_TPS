@@ -41,9 +41,8 @@ protected:
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult) const;
 
 	void SetHUDCrosshairs(const float DeltaTime);
+	
 private:
-	
-	
 	UPROPERTY()
 	ATPSCharacterBase* Character;
 

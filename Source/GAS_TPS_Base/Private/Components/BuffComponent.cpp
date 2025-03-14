@@ -3,33 +3,46 @@
 
 #include "Components/BuffComponent.h"
 
+#include "Character/TpsCharacterBase.h"
 
-// Sets default values for this component's properties
 UBuffComponent::UBuffComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
 void UBuffComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
-
-// Called every frame
 void UBuffComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	HealRampUp(DeltaTime);
 }
 
+void UBuffComponent::Heal(float HealAmount, float HealingTime)
+{
+	bIsHealing = true;
+
+	HealingRate = HealAmount / HealingTime;
+	AmountToHeal += HealAmount;
+}
+
+void UBuffComponent::HealRampUp(const float DeltaTime)
+{
+	if (!bIsHealing || !Character || Character->bIsEliminated) return;
+
+	const float HealthToHealThisFrame = HealingRate * DeltaTime;
+
+	Character->SetHealth(FMath::Clamp(Character->GetHealth() + HealthToHealThisFrame, 0.f, Character->GetMaxHealth()));
+	Character->HandleHUDHealth();
+	AmountToHeal -= HealthToHealThisFrame;
+
+	if (AmountToHeal <= 0.f || Character->GetHealth() >= Character->GetMaxHealth())
+	{
+		bIsHealing = false;
+		AmountToHeal = 0.f;
+	}
+}

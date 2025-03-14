@@ -12,68 +12,57 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b527afb8-66ee-40c5-bd20-4e88b0a15903" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/PickupBase.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/Ammo/AmmoPickup.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/PickupBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="72bbb45d-81df-4427-835a-66564fd939d6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Health/HealthPickup.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/SpawnPoint/PickupSpawnPoint.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/Health/HealthPickup.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/SpawnPoint/PickupSpawnPoint.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SKM_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Thompson/SK_MERGED_BPP_NewMap1_C_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Thompson/SK_MERGED_BPP_NewMap1_C_2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Weapons/L96/L96.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/L96.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Weapons/L96/scene_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/BP_Pistol.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/BP_Rifle.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanPistol.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HitScanPistol.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_Shotgun.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_Shotgun.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/Sniper/BP_Sniper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/Sniper/BP_Sniper.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_AssaultRifleAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_AssaultRifleAmmo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_PistolAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_PistolAmmo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SMGAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SMGAmmo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_ShotgunAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_ShotgunAmmo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SniperAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SniperAmmo.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/GAS_TPS_Base.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/GAS_TPS_Base.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/BuffComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/BuffComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Character/TpsCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Character/TpsCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/BuffComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/BuffComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UWSFX.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DpaMonitoringSettings">
-    <option name="firstShow" value="false" />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="2uDTcv47pEkZ3WfWBc3t6Mttg2q" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2uJ4LqMHrRN1UPZi10CLTpL2lRC" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;C/C++ Project.GAS_TPS.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ Project.GAS_TPS.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C/C++ Project.GAS_TPS">
     <configuration name="GAS_TPS" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -166,24 +155,19 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile">
-        <settings />
-      </deployment>
-      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <deployment type="dockerfile" />
       <method v="2" />
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b527afb8-66ee-40c5-bd20-4e88b0a15903" name="Changes" comment="" />
-      <created>1741782229226</created>
+      <changelist id="72bbb45d-81df-4427-835a-66564fd939d6" name="Changes" comment="" />
+      <created>1741953291059</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1741782229226</updated>
-      <workItem from="1741782231661" duration="11752000" />
-      <workItem from="1741812079339" duration="1285000" />
-      <workItem from="1741867538252" duration="126000" />
+      <updated>1741953291059</updated>
+      <workItem from="1741953293433" duration="9896000" />
     </task>
     <servers />
   </component>

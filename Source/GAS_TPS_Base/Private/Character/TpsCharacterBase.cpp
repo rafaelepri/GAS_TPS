@@ -25,6 +25,7 @@
 #include "GameMode/MainGameMode.h"
 #include "TimerManager.h"
 #include "PlayerState/MainPlayerState.h"
+#include "Components/BuffComponent.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -96,6 +97,9 @@ ATPSCharacterBase::ATPSCharacterBase() {
 	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
 	Combat->SetIsReplicated(true);
 
+	Buff = CreateDefaultSubobject<UBuffComponent>(TEXT("BuffComponent"));
+	Buff->SetIsReplicated(true);
+
 	SetNetUpdateFrequency(66.f);
 	SetMinNetUpdateFrequency(33.f);
 
@@ -159,8 +163,14 @@ void ATPSCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 void ATPSCharacterBase::PostInitializeComponents() {
 	Super::PostInitializeComponents();
 
-	if (Combat) {
+	if (Combat)
+	{
 		Combat->Character = this;
+	}
+
+	if (Buff)
+	{
+		Buff->Character = this;
 	}
 }
 
@@ -840,9 +850,17 @@ void ATPSCharacterBase::HideCameraIfCharacterClose() const {
 ////////////////////////////////////////////////////////////////////////////// HEALTH
 ///
 
-void ATPSCharacterBase::OnRep_Health() {
+void ATPSCharacterBase::OnRep_Health(const float LastHealthValue) {
 	// can play animations here
 	HandleHUDHealth();
+
+	if (Health < LastHealthValue)
+	{
+		// play hit reaction montage for instance
+	} else
+	{
+		// we are healing
+	}
 }
 
 void ATPSCharacterBase::HandleHUDHealth()

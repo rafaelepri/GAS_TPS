@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Components/SphereComponent.h"
+#include "Pickups/SpawnPoint/PickupSpawnPoint.h"
 #include "Weapons/Enums/WeaponTypes.h"
 
 
@@ -35,8 +36,14 @@ void APickupBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if (HasAuthority()) {
-		OverlapSphere->OnComponentBeginOverlap.AddDynamic(this, &APickupBase::OnSphereOverlap);
+	if (HasAuthority())
+	{
+		GetWorldTimerManager().SetTimer(
+			BindOverlapTimer,
+			this,
+			&APickupBase::BindOverlapTimerFinished,
+			BindOverlapTime
+		);
 	}
 }
 
@@ -51,6 +58,11 @@ void APickupBase::Tick(float DeltaTime)
 void APickupBase::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
+}
+
+void APickupBase::BindOverlapTimerFinished()
+{
+	OverlapSphere->OnComponentBeginOverlap.AddDynamic(this, &APickupBase::OnSphereOverlap);
 }
 
 void APickupBase::Destroyed()

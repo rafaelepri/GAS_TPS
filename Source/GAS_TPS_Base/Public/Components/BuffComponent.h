@@ -14,11 +14,23 @@ class GAS_TPS_BASE_API UBuffComponent : public UActorComponent
 
 public:
 	UBuffComponent();
+	friend class ATPSCharacterBase;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+							   FActorComponentTickFunction* ThisTickFunction) override;
 
+	void Heal(float HealAmount, float HealingTime);
 protected:
 	virtual void BeginPlay() override;
 
+	void HealRampUp(const float DeltaTime);
+private:
+	UPROPERTY()
+	ATPSCharacterBase* Character;
+
+	bool bIsHealing = false;
+	float HealingRate = 0.f;
+	float AmountToHeal = 0.f;
+	
 public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+
 };
