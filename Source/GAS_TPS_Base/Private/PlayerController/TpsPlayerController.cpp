@@ -53,6 +53,16 @@ void ATpsPlayerController::PollInit()
 				SetHUDHealth(HUDHealth, HUDMaxHealth);
 				SetHUDScore(HUDScore);
 				SetHUDDefeats(HUDDefeats);
+
+				if (bInitializeCarryingAmmo)
+				{	
+					SetHUDCarryingAmmo(HUDCarryingAmmo);
+				}
+
+				if (bInitializeWeaponAmmo)
+				{
+					SetHUDWeaponAmmo(HUDWeaponAmmo);
+				}
 			}
 		}
 	}	
@@ -63,9 +73,11 @@ void ATpsPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	if (const ATPSCharacterBase* TpsCharacter = Cast<ATPSCharacterBase>(InPawn))
+	if (ATPSCharacterBase* TpsCharacter = Cast<ATPSCharacterBase>(InPawn))
 	{
 		SetHUDHealth(TpsCharacter->GetHealth(), TpsCharacter->GetMaxHealth());
+		TpsCharacter->UpdateHUDAmmo();
+		TpsCharacter->SpawnDefaultWeapon();
 	}
 }
 
@@ -135,6 +147,10 @@ void ATpsPlayerController::SetHUDWeaponAmmo(const int32& Ammo)
 	{
 		const FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
 		TpsHUD->CharacterOverlay->WeaponAmmoAmount->SetText(FText::FromString(AmmoText));
+	} else
+	{
+		bInitializeWeaponAmmo = true;
+		HUDWeaponAmmo = Ammo;
 	}
 }
 
@@ -148,6 +164,10 @@ void ATpsPlayerController::SetHUDCarryingAmmo(const int32& Ammo)
 	{
 		const FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
 		TpsHUD->CharacterOverlay->CarryingAmmoAmount->SetText(FText::FromString(AmmoText));
+	} else
+	{
+		bInitializeCarryingAmmo = true;
+		HUDCarryingAmmo = Ammo;
 	}
 }
 

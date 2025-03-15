@@ -189,7 +189,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	FCameraParameters CameraStyleThirdPersonAim;
 
+	UPROPERTY()
 	class AMainPlayerState* MainPlayerState;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AWeapon> DefaultWeaponClass;
+	void SpawnDefaultWeapon() const;
 
 	////////////////////////////////////////////////////////	INPUT
 	///
@@ -364,6 +369,8 @@ public:
 	UPROPERTY()
 	float HideCameraThreshold = 50.f;
 
+	void UpdateHUDAmmo();
+
 	////////////////////////////////////////////////////////////////////////////// PLAYER HEALTH
 	///
 
@@ -396,7 +403,7 @@ public:
 protected:
 	// Poll for any relevant classes and initialize our HUD
 	void PollInit();
-	
+
 public:
 	FORCEINLINE float GetHealth() const { return Health; }
 	FORCEINLINE void SetHealth(const float HealthAmount) { Health = HealthAmount; }

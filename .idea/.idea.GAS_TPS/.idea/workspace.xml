@@ -13,24 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72bbb45d-81df-4427-835a-66564fd939d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Health/HealthPickup.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/SpawnPoint/PickupSpawnPoint.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/Health/HealthPickup.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Pickups/SpawnPoint/PickupSpawnPoint.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_AssaultRifleAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_AssaultRifleAmmo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_PistolAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_PistolAmmo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SMGAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SMGAmmo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_ShotgunAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_ShotgunAmmo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SniperAmmo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/Pickups/BP_SniperAmmo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Character/Blueprints/BP_TpsCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Blueprints/BP_TpsCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/GAS_TPS_Base.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/GAS_TPS_Base.Build.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/BuffComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/BuffComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Pickups/Ammo/AmmoPickup.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Character/TpsCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Character/TpsCharacterBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/BuffComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/BuffComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/PlayerController/TpsPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/PlayerController/TpsPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo"><![CDATA[{
   "customColor": "",
   "associatedIndex": 3
@@ -167,13 +158,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741953291059</updated>
-      <workItem from="1741953293433" duration="9896000" />
+      <workItem from="1741953293433" duration="16562000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

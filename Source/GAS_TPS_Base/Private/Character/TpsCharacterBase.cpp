@@ -26,6 +26,7 @@
 #include "TimerManager.h"
 #include "PlayerState/MainPlayerState.h"
 #include "Components/BuffComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -193,6 +194,8 @@ void ATPSCharacterBase::Server_Traversal_Implementation(const FTraversalParams I
 }
 
 /////////////////////////////////////////////////////////////////////////////////// INPUT SETUP
+
+
 
 void ATPSCharacterBase::NotifyControllerChanged() {
 	Super::NotifyControllerChanged();
@@ -847,6 +850,24 @@ void ATPSCharacterBase::HideCameraIfCharacterClose() const {
 	}
 }
 
+void ATPSCharacterBase::SpawnDefaultWeapon() const
+{
+	const AMainGameMode* MainGameMode = Cast<AMainGameMode>(UGameplayStatics::GetGameMode(this));
+	UWorld* World = GetWorld();
+	if (MainGameMode && World && !bIsEliminated && DefaultWeaponClass)
+	{
+		AWeapon* StartingWeapon = World->SpawnActor<AWeapon>(DefaultWeaponClass);
+		if (StartingWeapon)
+		{
+			StartingWeapon->bDestroyWeapon = true;
+		}
+		if (Combat)
+		{
+			Combat->EquipWeapon(StartingWeapon);
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////// HEALTH
 ///
 
@@ -869,6 +890,17 @@ void ATPSCharacterBase::HandleHUDHealth()
 	if (TpsPlayerController)
 	{
 		TpsPlayerController->SetHUDHealth(Health, MaxHealth);
+	}
+}
+
+
+void ATPSCharacterBase::UpdateHUDAmmo()
+{
+	TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Controller) : TpsPlayerController;
+	if (TpsPlayerController && Combat && Combat->EquippedWeapon)
+	{
+		TpsPlayerController->SetHUDCarryingAmmo(Combat->CarryingAmmo);
+		TpsPlayerController->SetHUDWeaponAmmo(Combat->EquippedWeapon->GetAmmo());
 	}
 }
 
@@ -895,8 +927,14 @@ void ATPSCharacterBase::Eliminated()
 {
 	if (Combat && Combat->EquippedWeapon)
 	{
-		Combat->EquippedWeapon->Dropped();
-		Combat->EquippedWeapon = nullptr;
+		if (Combat->EquippedWeapon->bDestroyWeapon)
+		{
+			Combat->EquippedWeapon->Destroy();
+		} else
+		{
+			Combat->EquippedWeapon->Dropped();
+			Combat->EquippedWeapon = nullptr;
+		}
 	}
 	MulticastEliminated_Implementation();
 	GetWorldTimerManager().SetTimer(
@@ -948,6 +986,7 @@ void ATPSCharacterBase::PollInit()
 		}
 	}
 }
+
 
 ECombatState ATPSCharacterBase::GetCombatState() const
 {
