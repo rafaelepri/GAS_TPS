@@ -29,6 +29,15 @@ public:
 	void AddAmmo(const int32& AmmoToAdd);
 
 	void PlayReloadAnimation() const;
+
+
+	/*
+	*			Enable or disable custom depth (outline effect)
+	*/
+
+	void EnableCustomDepth(bool bEnable);
+	
+	
 	/*
 	*			Textures for weapon crosshairs
 	*/
@@ -59,7 +68,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = Combat)
 	bool bIsWeaponAutomatic = true;
 
-	
+	UPROPERTY(EditAnywhere)
+	USoundCue* EquipSound;
+
+	bool bDestroyWeapon = false;
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -100,7 +112,7 @@ private:
 	USphereComponent* AreaSphere;
 
 	UFUNCTION()
-	void OnRep_WeaponState() const;
+	void OnRep_WeaponState();
 	UPROPERTY(ReplicatedUsing = OnRep_WeaponState , VisibleAnywhere, Category = "Weapon Properties")
 	EWeaponState WeaponState;
 
@@ -127,12 +139,6 @@ private:
 	void OnRep_Ammo();
 
 	void SpendRound();
-
-
-	
-	
-
-
 public:
 	void SetWeaponState(const EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }

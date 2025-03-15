@@ -189,7 +189,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	FCameraParameters CameraStyleThirdPersonAim;
 
+	UPROPERTY()
 	class AMainPlayerState* MainPlayerState;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AWeapon> DefaultWeaponClass;
+	void SpawnDefaultWeapon() const;
 
 	////////////////////////////////////////////////////////	INPUT
 	///
@@ -347,6 +352,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
 	UCombatComponent* Combat;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
+	class UBuffComponent* Buff; 
 	
 	UPROPERTY(Replicated, EditAnyWhere, BlueprintReadOnly, Category = "Data")
 	FCharacterWeaponState CharacterWeaponState;
@@ -361,6 +369,8 @@ public:
 	UPROPERTY()
 	float HideCameraThreshold = 50.f;
 
+	void UpdateHUDAmmo();
+
 	////////////////////////////////////////////////////////////////////////////// PLAYER HEALTH
 	///
 
@@ -373,7 +383,7 @@ public:
 	float Health = MaxHealth;
 
 	UFUNCTION()
-	void OnRep_Health();
+	void OnRep_Health(const float LastHealthValue);
 	void HandleHUDHealth();
 	
 	UFUNCTION()
@@ -393,12 +403,14 @@ public:
 protected:
 	// Poll for any relevant classes and initialize our HUD
 	void PollInit();
-	
+
 public:
 	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE void SetHealth(const float HealthAmount) { Health = HealthAmount; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	ECombatState GetCombatState() const;
 	FORCEINLINE UCombatComponent* GetCombatComponent() const { return Combat; }
+	FORCEINLINE UBuffComponent* GetBuffComponent() const { return Buff; }
 };
 
 
