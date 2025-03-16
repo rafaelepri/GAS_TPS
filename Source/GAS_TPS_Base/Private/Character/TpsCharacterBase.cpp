@@ -179,10 +179,7 @@ void ATPSCharacterBase::Server_SetCharacterWeaponState_Implementation(const FCha
 	CharacterWeaponState = NewState;
 }
 
-void ATPSCharacterBase::Server_PickupAction_Implementation() {
-	// Combat is being checked for this function call
-	Combat->EquipWeapon(OverlappingWeapon);
-}
+
 
 void ATPSCharacterBase::Server_SetCharacterInputState_Implementation(const FCharacterInputState NewState) {
 	CharacterInputState = NewState;
@@ -347,11 +344,23 @@ void ATPSCharacterBase::PickUpAction() {
 	if (bDisableGameplay) return;
 	
 	if (Combat) {
-		if (HasAuthority()) {
-			Combat->EquipWeapon(OverlappingWeapon);
-		}
-
 		Server_PickupAction();
+	}
+}
+
+void ATPSCharacterBase::Server_PickupAction_Implementation() {
+	if (Combat)
+	{
+		if (OverlappingWeapon)
+		{
+			Combat->EquipWeapon(OverlappingWeapon);
+		} else
+		{
+			if (Combat->ShouldSwapWeapons())
+			{
+				Combat->SwapWeapons();
+			}
+		}
 	}
 }
 
@@ -925,15 +934,29 @@ void ATPSCharacterBase::ReceiveDamage(AActor* DamagedActor, const float Damage, 
 
 void ATPSCharacterBase::Eliminated()
 {
-	if (Combat && Combat->EquippedWeapon)
+	if (Combat)
 	{
-		if (Combat->EquippedWeapon->bDestroyWeapon)
+		if (Combat->EquippedWeapon)
 		{
-			Combat->EquippedWeapon->Destroy();
-		} else
+			if (Combat->EquippedWeapon->bDestroyWeapon)
+			{
+				Combat->EquippedWeapon->Destroy();
+			} else
+			{
+				Combat->EquippedWeapon->Dropped();
+				Combat->EquippedWeapon = nullptr;
+			}
+		}
+		if (Combat->SecondaryWeapon)
 		{
-			Combat->EquippedWeapon->Dropped();
-			Combat->EquippedWeapon = nullptr;
+			if (Combat->SecondaryWeapon->bDestroyWeapon)
+			{
+				Combat->SecondaryWeapon->Destroy();
+			} else
+			{
+				Combat->SecondaryWeapon->Dropped();
+				Combat->SecondaryWeapon = nullptr;
+			}
 		}
 	}
 	MulticastEliminated_Implementation();
@@ -992,5 +1015,15 @@ ECombatState ATPSCharacterBase::GetCombatState() const
 {
 	if (!Combat) return ECombatState::ECS_MAX;
 	return Combat->CombatState;
+}
+
+AWeapon* ATPSCharacterBase::GetEquippedWeapon() const
+{
+	if (Combat)
+	{
+		return Combat->EquippedWeapon;
+	}
+
+	return nullptr;
 }
 

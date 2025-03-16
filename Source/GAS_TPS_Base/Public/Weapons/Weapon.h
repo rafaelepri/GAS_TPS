@@ -93,8 +93,10 @@ protected:
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
-	virtual void OnEquipped();
-
+	virtual void OnWeaponStateSet();
+	virtual void OnEquippedStateSet();
+	virtual void OnDroppedStateSet();
+	virtual void OnEquippedSecondaryStateSet();
 
 private:
 	UPROPERTY()

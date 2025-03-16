@@ -77,41 +77,65 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
-void AWeapon::OnEquipped() {
-
-}
-
 void AWeapon::SetWeaponState(const EWeaponState State) {
 	WeaponState = State;
+	OnWeaponStateSet();
+}
+
+void AWeapon::OnWeaponStateSet()
+{
 	switch (WeaponState)
 	{
-		case EWeaponState::EWS_Equipped:
-			ShowPickupWidget(false);
-			AreaSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision); // this stops overlap events
-			WeaponMesh->SetSimulatePhysics(false);
-			WeaponMesh->SetEnableGravity(false);
-			WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		
-			EnableCustomDepth(false);
+	case EWeaponState::EWS_Equipped:
+		OnEquippedStateSet();
+		break;
+
+	case EWeaponState::EWS_EquippedSecondary:
+		OnEquippedSecondaryStateSet();
 		break;
 		
-		case EWeaponState::EWS_Dropped:
-			if (HasAuthority())
-			{
-				AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);	
-			}
-			WeaponMesh->SetSimulatePhysics(true);
-			WeaponMesh->SetEnableGravity(true);
-			WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-
-			WeaponMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_BLUE);
-			WeaponMesh->MarkRenderStateDirty();
-			EnableCustomDepth(true);
+	case EWeaponState::EWS_Dropped:
+		OnDroppedStateSet();
 		break;
 	}
 }
 
+void AWeapon::OnEquippedStateSet()
+{
+	ShowPickupWidget(false);
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision); // this stops overlap events
+	WeaponMesh->SetSimulatePhysics(false);
+	WeaponMesh->SetEnableGravity(false);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
+	EnableCustomDepth(false);
+}
 
+void AWeapon::OnDroppedStateSet()
+{
+	if (HasAuthority())
+	{
+		AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);	
+	}
+	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetEnableGravity(true);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
+	WeaponMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_BLUE);
+	WeaponMesh->MarkRenderStateDirty();
+	EnableCustomDepth(true);
+}
+
+void AWeapon::OnEquippedSecondaryStateSet()
+{
+	ShowPickupWidget(false);
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision); // this stops overlap events
+	WeaponMesh->SetSimulatePhysics(false);
+	WeaponMesh->SetEnableGravity(false);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
+	EnableCustomDepth(false);
+}
 
 void AWeapon::OnRep_WeaponState() {
 	switch (WeaponState)
@@ -236,7 +260,11 @@ void AWeapon::OnRep_Owner()
 		TPSPlayerController = nullptr;
 	} else
 	{
-		SetHUDAmmo();
+		TPSChar = !TPSChar ? Cast<ATPSCharacterBase>(Owner) : TPSChar;
+		if (TPSChar && TPSChar->GetEquippedWeapon() && TPSChar->GetEquippedWeapon() == this)
+		{
+			SetHUDAmmo();
+		}
 	}
 }
 
