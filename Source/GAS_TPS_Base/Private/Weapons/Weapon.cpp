@@ -8,6 +8,7 @@
 #include "Animation/AnimationAsset.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Weapons/Casing.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Net/UnrealNetwork.h"
 
 AWeapon::AWeapon() {
@@ -45,12 +46,10 @@ void AWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 void AWeapon::BeginPlay() {
 	Super::BeginPlay();
 
-	if (HasAuthority()) {
-		AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		AreaSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-		AreaSphere->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnSphereOverlap);
-		AreaSphere->OnComponentEndOverlap.AddDynamic(this, &AWeapon::OnSphereEndOverlap);
-	}
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	AreaSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	AreaSphere->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnSphereOverlap);
+	AreaSphere->OnComponentEndOverlap.AddDynamic(this, &AWeapon::OnSphereEndOverlap);
 
 	if (PickupWidget) {
 		PickupWidget->SetVisibility(false);
@@ -189,7 +188,10 @@ void AWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQ
 		}
 	}
 
-	SpendRound();
+	if (HasAuthority())
+	{
+		SpendRound();
+	}
 }
 
 void AWeapon::Dropped()
@@ -271,5 +273,32 @@ void AWeapon::OnRep_Owner()
 bool AWeapon::IsEmpty() const
 {
 	return WeaponAmmo <= 0;
+}
+
+FVector AWeapon::TraceEndWithScatter(const FVector& HitTarget)
+{
+	const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleSocket");
+	if (!MuzzleFlashSocket) return FVector::ZeroVector;
+
+	const FTransform SocketTransform = MuzzleFlashSocket->GetSocketTransform(GetWeaponMesh());
+	const FVector TraceStart = SocketTransform.GetLocation();
+	
+	const FVector ToTargetNormalized = (HitTarget - TraceStart).GetSafeNormal();
+	const FVector SphereCenter = TraceStart + ToTargetNormalized * DistanceToSphere;
+	const FVector RandomVector = UKismetMathLibrary::RandomUnitVector() * FMath::FRandRange(0.f, SphereRadius);
+	const FVector EndLocation = SphereCenter + RandomVector;
+	const FVector ToEndLocation = EndLocation - TraceStart;
+	
+	// DrawDebugSphere(GetWorld(), SphereCenter, SphereRadius, 12, FColor::Red, true);
+	// DrawDebugSphere(GetWorld(), EndLocation , 4.f, 24, FColor::Orange, true);
+	// DrawDebugLine(
+	// 	GetWorld(),
+	// TraceStart,
+	// FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size()),
+	// FColor::Green,
+	// true
+	// );
+
+	return FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size());
 }
 

@@ -98,9 +98,6 @@ void UCombatComponent::SetHUDCrosshairs(const float DeltaTime) {
 	}
 }
 
-
-
-
 void UCombatComponent::FireButtonPressed(const bool bPressed) {
 	if (EquippedWeapon == nullptr || !Character) return;
 	
@@ -109,23 +106,6 @@ void UCombatComponent::FireButtonPressed(const bool bPressed) {
 	{
 		Fire();
 	}	
-}
-
-void UCombatComponent::PickupAmmo(const EWeaponType WeaponType,const int32 AmmoAmount)
-{
-	if (!CarryingAmmoMap.Contains(WeaponType))
-	{
-		CarryingAmmoMap.Add(WeaponType, 0);
-	}
-
-	CarryingAmmoMap[WeaponType] += AmmoAmount;
-	CarryingAmmo = CarryingAmmoMap[WeaponType];
-	UpdateAmmoValues(false);
-
-	if (EquippedWeapon && EquippedWeapon->IsEmpty() && EquippedWeapon->GetWeaponType() == WeaponType)
-	{
-		Reload();
-	}
 }
 
 bool UCombatComponent::CanFire() const
@@ -147,11 +127,47 @@ void UCombatComponent::Fire() {
 	// the above code is taking care of the muzzle socket location and sending it down the line of fire, so the server have an accurate position
 	// of the socket in order to spawn the projectile in the correct position on all clients
 
-	ServerFire(HitResult.ImpactPoint, ProjectileSpawnLocation, TargetRotation);
+	switch (EquippedWeapon->FireType)
+	{
+		case EFireType::EFT_Projectile:
+			FireProjectileWeapon(HitResult.ImpactPoint, ProjectileSpawnLocation, TargetRotation);
+			break;
+		case EFireType::EFT_HitScan:
+			FireHitScanWeapon(HitResult.ImpactPoint, ProjectileSpawnLocation, TargetRotation);
+			break;
+		case EFireType::EFT_Shotgun:
+			FireShotgun();
+			break;
+		default:
+			break;
+	}
 
 	CrosshairShootingFactor = 1.f;
 
 	StartFireTimer();
+}
+
+void UCombatComponent::FireProjectileWeapon(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation)
+{
+	const FVector_NetQuantize ScatteredHitTarget = EquippedWeapon->TraceEndWithScatter(TraceHitTarget);
+	
+	ServerFire(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
+	FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
+	// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+}
+
+void UCombatComponent::FireHitScanWeapon(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation)
+{
+	const FVector_NetQuantize ScatteredHitTarget = EquippedWeapon->TraceEndWithScatter(TraceHitTarget);
+	
+	ServerFire(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
+	FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
+	// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+}
+
+void UCombatComponent::FireShotgun()
+{
+	
 }
 
 void UCombatComponent::ServerFire_Implementation(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) { // called in a client and executed on the server (RPC)
@@ -159,6 +175,14 @@ void UCombatComponent::ServerFire_Implementation(const FVector_NetQuantize& Trac
 }
 
 void UCombatComponent::MulticastFire_Implementation(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) { // If we call a function on the server from the client, we use this multicast rpc function to broadcast the event to all clients
+	// handle recoil here
+	if (Character && Character->IsLocallyControlled() && !Character->HasAuthority()) return;
+	FireLocally(TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
+}
+
+void UCombatComponent::FireLocally(const FVector_NetQuantize& TraceHitTarget,
+	const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) const
+{
 	// handle recoil here
 	if (CombatState == ECombatState::ECS_Unoccupied)
 	{
@@ -520,6 +544,8 @@ bool UCombatComponent::ShouldSwapWeapons()
 
 void UCombatComponent::SwapWeapons()
 {
+	if (CombatState != ECombatState::ECS_Unoccupied) return;
+	
 	AWeapon* HoldWeapon = EquippedWeapon;
 	EquippedWeapon = SecondaryWeapon;
 	SecondaryWeapon = HoldWeapon;
@@ -542,3 +568,20 @@ void UCombatComponent::SwapWeapons()
 	}
 }
 
+
+void UCombatComponent::PickupAmmo(const EWeaponType WeaponType,const int32 AmmoAmount)
+{
+	if (!CarryingAmmoMap.Contains(WeaponType))
+	{
+		CarryingAmmoMap.Add(WeaponType, 0);
+	}
+
+	CarryingAmmoMap[WeaponType] += AmmoAmount;
+	CarryingAmmo = CarryingAmmoMap[WeaponType];
+	UpdateAmmoValues(false);
+
+	if (EquippedWeapon && EquippedWeapon->IsEmpty() && EquippedWeapon->GetWeaponType() == WeaponType)
+	{
+		Reload();
+	}
+}

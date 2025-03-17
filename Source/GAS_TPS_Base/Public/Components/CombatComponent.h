@@ -90,6 +90,11 @@ private:
 
 	bool CanFire() const;
 	void Fire();
+
+	void FireProjectileWeapon(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation);
+	void FireHitScanWeapon(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation);
+	void FireShotgun();
+	void FireLocally(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) const;
 	bool bFireButtonPressed;
 
 

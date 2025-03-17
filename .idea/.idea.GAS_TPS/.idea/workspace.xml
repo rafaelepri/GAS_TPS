@@ -14,10 +14,16 @@
   <component name="ChangeListManager">
     <list default="true" id="72bbb45d-81df-4427-835a-66564fd939d6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_TPS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/HUD/WBP_CharacterOverlay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/HUD/WBP_CharacterOverlay.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/HUD/CharacterOverlay.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/HUD/CharacterOverlay.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/PlayerController/TpsPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/PlayerController/TpsPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Blueprints/BP_MainGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Blueprints/BP_MainGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/HitScan/BP_HS_Thompson.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Core/Weapons/Rifle/BP_AssaultRifle.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Components/CombatComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Components/CombatComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,10 +34,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Private/Character/TpsCharacterBase.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Private/PlayerController/TpsPlayerController.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Public/Character/TpsCharacterBase.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Public/PlayerController/TpsPlayerController.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Private/Weapons/HitScan/HitScanWeapon.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Private/Weapons/Weapon.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Public/Weapons/Enums/WeaponTypes.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Public/Weapons/HitScan/HitScanWeapon.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://E:/Unreal Engine/GAS_TPS/Source/GAS_TPS_Base/Public/Weapons/Weapon.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -44,20 +50,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;C/C++ Project.GAS_TPS.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ Project.GAS_TPS.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "feat/lagCompensation",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C/C++ Project.GAS_TPS">
     <configuration name="GAS_TPS" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -168,7 +174,7 @@
       <workItem from="1741953293433" duration="17423000" />
       <workItem from="1742044049196" duration="7947000" />
       <workItem from="1742083255411" duration="1399000" />
-      <workItem from="1742215748647" duration="3254000" />
+      <workItem from="1742215748647" duration="14811000" />
     </task>
     <servers />
   </component>

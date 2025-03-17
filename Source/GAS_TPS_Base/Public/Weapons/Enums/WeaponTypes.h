@@ -27,3 +27,13 @@ enum class EWeaponState : uint8 {
 
 	EWS_MAX UMETA(DisplayName = "Max")
 };
+
+UENUM(BlueprintType)
+enum class EFireType : uint8
+{
+	EFT_HitScan UMETA(DisplayName = "HitScan"),
+	EFT_Projectile UMETA(DisplayName = "Projectile"),
+	EFT_Shotgun UMETA(DisplayName = "Shotgun"),
+
+	EFT_MAX UMETA(DisplayName = "Max")
+};
