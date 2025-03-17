@@ -12,6 +12,7 @@
 #include "HUD/Widget/Announcement.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CombatComponent.h"
+#include "Components/Image.h"
 #include "Net/UnrealNetwork.h"
 #include "GameState/MainGameState.h"
 #include "PlayerState/MainPlayerState.h"
@@ -32,6 +33,7 @@ void ATpsPlayerController::Tick(const float DeltaTime)
 	SetHUDTime();
 	CheckTimeSync(DeltaTime);
 	PollInit();
+	CheckPing(DeltaTime);
 }
 
 void ATpsPlayerController::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -249,8 +251,6 @@ void ATpsPlayerController::SetHUDTime()
 	CountdownInt = SecondsLeft;
 }
 
-
-
 void ATpsPlayerController::ServerRequestServerTime_Implementation(const float& TimeOfClientRequest)
 {
 	const float ServerTimeOfReceipt = GetWorld()->GetTimeSeconds();
@@ -283,8 +283,6 @@ void ATpsPlayerController::ReceivedPlayer()
 		ServerRequestServerTime(GetWorld()->GetTimeSeconds());
 	}
 }
-
-
 
 void ATpsPlayerController::CheckTimeSync(const float& DeltaTime)
 {
@@ -426,3 +424,61 @@ void ATpsPlayerController::ClientJoinMidGame_Implementation(const FName& StateOf
 	}
 }
 
+void ATpsPlayerController::HighPingWarning()
+{
+	TpsHUD = !TpsHUD ? Cast<ATpsHUD>(GetHUD()) : TpsHUD;
+	
+	if (TpsHUD &&
+		TpsHUD->CharacterOverlay &&
+		TpsHUD->CharacterOverlay->HighPingImage &&
+		TpsHUD->CharacterOverlay->HighPingAnimation)
+	{
+		TpsHUD->CharacterOverlay->HighPingImage->SetOpacity(1.f);
+		TpsHUD->CharacterOverlay->PlayAnimation(TpsHUD->CharacterOverlay->HighPingAnimation, 0.f, 5.f);
+	}
+}
+
+void ATpsPlayerController::StopHighPingWarning()
+{
+	TpsHUD = !TpsHUD ? Cast<ATpsHUD>(GetHUD()) : TpsHUD;
+	
+	if (TpsHUD &&
+		TpsHUD->CharacterOverlay &&
+		TpsHUD->CharacterOverlay->HighPingImage &&
+		TpsHUD->CharacterOverlay->HighPingAnimation)
+	{
+		TpsHUD->CharacterOverlay->HighPingImage->SetOpacity(0.f);
+		if (TpsHUD->CharacterOverlay->IsAnimationPlaying(TpsHUD->CharacterOverlay->HighPingAnimation))
+		{
+			TpsHUD->CharacterOverlay->StopAnimation(TpsHUD->CharacterOverlay->HighPingAnimation);
+		}
+	}
+}
+
+void ATpsPlayerController::CheckPing(const float DeltaTime)
+{
+	HighPingRunningTime += DeltaTime;
+	if (HighPingRunningTime > CheckPingFrequency)
+	{
+		PlayerState = !PlayerState ? GetPlayerState<AMainPlayerState>() : PlayerState;
+		if (PlayerState)
+		{
+			if (PlayerState->GetPingInMilliseconds() > HighPingThreshold) // GetPingInMilliseconds will multiply by 4. GetCompressedPing returns the ping / 4. Ping in compressed 
+			{
+				HighPingWarning();
+				HighPingAnimationRunningTime = 0.f;
+			}
+		}
+		HighPingRunningTime = 0.f;
+	}
+	if (TpsHUD && TpsHUD->CharacterOverlay &&
+		TpsHUD->CharacterOverlay->HighPingAnimation &&
+		TpsHUD->CharacterOverlay->IsAnimationPlaying(TpsHUD->CharacterOverlay->HighPingAnimation))
+	{
+		HighPingAnimationRunningTime += DeltaTime;
+		if (HighPingRunningTime > HighPingDuration)
+		{
+			StopHighPingWarning();
+		}
+	}
+}

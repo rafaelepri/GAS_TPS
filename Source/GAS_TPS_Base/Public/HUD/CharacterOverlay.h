@@ -28,4 +28,10 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* MatchCountdownText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* HighPingImage;
+
+	UPROPERTY(meta = (BindWidgetAnim), Transient) // Transient means it's not serialized to disk -> can be set at run time
+	UWidgetAnimation* HighPingAnimation;
 };
