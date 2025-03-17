@@ -57,6 +57,10 @@ protected:
 
 	UFUNCTION(Client, Reliable)
 	void ClientJoinMidGame(const FName& StateOfMatch, const float& Warmup, const float& Match, const float& StartingTime, const float& Cooldown);
+
+	void HighPingWarning();
+	void StopHighPingWarning();
+	void CheckPing(const float DeltaTime);
 private:
 	UPROPERTY()
 	class ATpsHUD* TpsHUD;
@@ -86,5 +90,11 @@ private:
 	bool bInitializeCarryingAmmo = false;
 	float HUDWeaponAmmo;
 	bool bInitializeWeaponAmmo = false;
+
+	float HighPingRunningTime = 0.f;
+	float HighPingAnimationRunningTime = 0.f;
+	float HighPingDuration = 5.f;
+	float HighPingThreshold = 75.f;
+	float CheckPingFrequency = 20.f;
 };
 

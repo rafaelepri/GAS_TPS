@@ -411,6 +411,7 @@ public:
 	ECombatState GetCombatState() const;
 	FORCEINLINE UCombatComponent* GetCombatComponent() const { return Combat; }
 	FORCEINLINE UBuffComponent* GetBuffComponent() const { return Buff; }
+	AWeapon* GetEquippedWeapon() const;
 };
 
 

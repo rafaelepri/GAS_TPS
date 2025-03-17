@@ -22,7 +22,9 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	void EquipWeapon(AWeapon* WeaponToEquip);
-
+	void EquipSecondaryWeapon(AWeapon* WeaponToEquip);
+	void SwapWeapons();
+	
 	void FireButtonPressed(const bool bPressed);
 
 	void PickupAmmo(const EWeaponType WeaponType,const int32 AmmoAmount);
@@ -32,6 +34,8 @@ protected:
 	
 	UFUNCTION()
 	void OnRep_EquippedWeapon();
+	UFUNCTION()
+	void OnRep_SecondaryWeapon();
 
 	UFUNCTION(Server, Reliable)
 	void ServerFire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation);
@@ -41,6 +45,10 @@ protected:
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult) const;
 
 	void SetHUDCrosshairs(const float DeltaTime);
+
+	void AttachActorToHand(AActor* ActorToAttach);
+	void AttachActorToHolster(AActor* ActorToAttach);
+	void AttachActorToBackPrimarySlot(AActor* ActorToAttach);
 	
 private:
 	UPROPERTY()
@@ -59,7 +67,9 @@ private:
 	
 	UPROPERTY(ReplicatedUsing = OnRep_EquippedWeapon)
 	AWeapon* EquippedWeapon;
-
+	UPROPERTY(ReplicatedUsing = OnRep_SecondaryWeapon)
+	AWeapon* SecondaryWeapon;
+	
 	UPROPERTY(ReplicatedUsing = OnRep_CarryingAmmo)
 	int32 CarryingAmmo;
 	UFUNCTION()
@@ -114,7 +124,6 @@ private:
 	void StartFireTimer();
 	void FireTimerFinished();
 
-	
-	
-public:	
+public:
+	bool ShouldSwapWeapons();
 };

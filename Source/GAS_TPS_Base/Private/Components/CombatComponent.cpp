@@ -20,6 +20,7 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UCombatComponent, EquippedWeapon);
+	DOREPLIFETIME(UCombatComponent, SecondaryWeapon);
 	DOREPLIFETIME_CONDITION(UCombatComponent, CarryingAmmo, COND_OwnerOnly);
 	DOREPLIFETIME(UCombatComponent, CombatState);
 }
@@ -96,6 +97,9 @@ void UCombatComponent::SetHUDCrosshairs(const float DeltaTime) {
 		HUD->setHUDPackage(HUDPackage);
 	}
 }
+
+
+
 
 void UCombatComponent::FireButtonPressed(const bool bPressed) {
 	if (EquippedWeapon == nullptr || !Character) return;
@@ -177,6 +181,7 @@ void UCombatComponent::FireTimerFinished() {
 		Reload();
 	}
 }
+
 
 void UCombatComponent::Reload()
 {
@@ -335,142 +340,29 @@ void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult) const {
 void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip) {
 	if (!Character || !WeaponToEquip) return;
 
-	if (EquippedWeapon)
+	if (EquippedWeapon && !SecondaryWeapon)
 	{
-		EquippedWeapon->Dropped();
-	}
-	
-	EquippedWeapon = WeaponToEquip;
-	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
-
-	switch (EquippedWeapon->GetWeaponType()) {
-		case EWeaponType::EWT_Melee:
-			Character->CharacterWeaponState.bHasMelee = true;
-			Character->CharacterWeaponState.bHasPistol = false;
-			Character->CharacterWeaponState.bHasRifle = false;
-
-			if (const USkeletalMeshSocket* MeleeWeaponSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
-				MeleeWeaponSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		case EWeaponType::EWT_Pistol:
-			Character->CharacterWeaponState.bHasMelee = false;
-			Character->CharacterWeaponState.bHasPistol = true;
-			Character->CharacterWeaponState.bHasRifle = false;
-
-			if (const USkeletalMeshSocket* PistolSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
-				PistolSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		case EWeaponType::EWT_Rifle:
-			Character->CharacterWeaponState.bHasMelee = false;
-			Character->CharacterWeaponState.bHasPistol = false;
-			Character->CharacterWeaponState.bHasRifle = true;
-			
-			if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
-				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		case EWeaponType::EWT_SMG:
-			Character->CharacterWeaponState.bHasMelee = false;
-			Character->CharacterWeaponState.bHasPistol = false;
-			Character->CharacterWeaponState.bHasRifle = true;
-				
-			if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_SMG"))) {
-				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		case EWeaponType::EWT_Shotgun:
-			Character->CharacterWeaponState.bHasMelee = false;
-			Character->CharacterWeaponState.bHasPistol = false;
-			Character->CharacterWeaponState.bHasRifle = true;
-					
-			if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
-				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		case EWeaponType::EWT_Sniper:
-			Character->CharacterWeaponState.bHasMelee = false;
-			Character->CharacterWeaponState.bHasPistol = false;
-			Character->CharacterWeaponState.bHasRifle = true;
-							
-			if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Sniper"))) {
-				RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-			}
-			break;
-		default:
-			break;
-	}
-	
-	EquippedWeapon->SetOwner(Character);
-	EquippedWeapon->SetHUDAmmo();
-
-	if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
+		EquipSecondaryWeapon(WeaponToEquip);
+	} else
 	{
-		CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
-	}
+		if (EquippedWeapon)
+		{	
+			EquippedWeapon->Dropped();
+		}
 	
-	TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController;
-
-	if (TpsPlayerController)
-	{
-		TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
-
-		HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
-	}
-}
-
-void UCombatComponent::OnRep_EquippedWeapon() {
-	if (EquippedWeapon && Character) {
+		EquippedWeapon = WeaponToEquip;
 		EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 
-		switch (EquippedWeapon->GetWeaponType()) {
-			case EWeaponType::EWT_Melee:
-				if (const USkeletalMeshSocket* MeleeWeaponSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
-					MeleeWeaponSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			case EWeaponType::EWT_Pistol:
-				if (const USkeletalMeshSocket* PistolSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
-					PistolSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			case EWeaponType::EWT_Rifle:
-				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
-					RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			case EWeaponType::EWT_SMG:
-				Character->CharacterWeaponState.bHasMelee = false;
-				Character->CharacterWeaponState.bHasPistol = false;
-				Character->CharacterWeaponState.bHasRifle = true;
-				
-				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_SMG"))) {
-					RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			case EWeaponType::EWT_Shotgun:
-				Character->CharacterWeaponState.bHasMelee = false;
-				Character->CharacterWeaponState.bHasPistol = false;
-				Character->CharacterWeaponState.bHasRifle = true;
-						
-				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
-					RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			case EWeaponType::EWT_Sniper:
-				Character->CharacterWeaponState.bHasMelee = false;
-				Character->CharacterWeaponState.bHasPistol = false;
-				Character->CharacterWeaponState.bHasRifle = true;
-							
-				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Sniper"))) {
-					RifleSocket->AttachActor(EquippedWeapon, Character->GetMesh());
-				}
-				break;
-			default:
-				break;
-		}
+		AttachActorToHand(EquippedWeapon);
+	
+		EquippedWeapon->SetOwner(Character);
+		EquippedWeapon->SetHUDAmmo();
 
+		if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
+		{
+			CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
+		}
+	
 		TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController;
 
 		if (TpsPlayerController)
@@ -482,6 +374,42 @@ void UCombatComponent::OnRep_EquippedWeapon() {
 	}
 }
 
+void UCombatComponent::EquipSecondaryWeapon(AWeapon* WeaponToEquip)
+{
+	SecondaryWeapon = WeaponToEquip;
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+	AttachActorToBackPrimarySlot(WeaponToEquip);
+	SecondaryWeapon->SetOwner(Character);
+}
+
+
+void UCombatComponent::OnRep_EquippedWeapon() {
+	if (EquippedWeapon && Character) {
+		EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+
+		AttachActorToHand(EquippedWeapon);
+
+		TpsPlayerController = !TpsPlayerController ? Cast<ATpsPlayerController>(Character->Controller) : TpsPlayerController;
+
+		if (TpsPlayerController)
+		{
+			TpsPlayerController->SetHUDCarryingAmmo(CarryingAmmo);
+
+			HUD = Cast<ATpsHUD>(TpsPlayerController->GetHUD());
+		}
+
+		EquippedWeapon->SetHUDAmmo();
+	}
+}
+
+void UCombatComponent::OnRep_SecondaryWeapon()
+{
+	if (SecondaryWeapon && Character)
+	{
+		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+		AttachActorToBackPrimarySlot(SecondaryWeapon);
+	}
+}
 
 void UCombatComponent::OnRep_CarryingAmmo()
 {
@@ -501,6 +429,116 @@ void UCombatComponent::InitializeCarryingAmmo()
 	CarryingAmmoMap.Emplace(EWeaponType::EWT_Sniper, Starting_Sniper_Ammo);
 }
 
+void UCombatComponent::AttachActorToHand(AActor* ActorToAttach)
+{
+	switch (EquippedWeapon->GetWeaponType()) {
+			case EWeaponType::EWT_Melee:
+				Character->CharacterWeaponState.bHasMelee = true;
+				Character->CharacterWeaponState.bHasPistol = false;
+				Character->CharacterWeaponState.bHasRifle = false;
+
+				if (const USkeletalMeshSocket* MeleeWeaponSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
+					MeleeWeaponSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			case EWeaponType::EWT_Pistol:
+				Character->CharacterWeaponState.bHasMelee = false;
+				Character->CharacterWeaponState.bHasPistol = true;
+				Character->CharacterWeaponState.bHasRifle = false;
+
+				if (const USkeletalMeshSocket* PistolSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"))) {
+					PistolSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			case EWeaponType::EWT_Rifle:
+				Character->CharacterWeaponState.bHasMelee = false;
+				Character->CharacterWeaponState.bHasPistol = false;
+				Character->CharacterWeaponState.bHasRifle = true;
+				
+				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
+					RifleSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			case EWeaponType::EWT_SMG:
+				Character->CharacterWeaponState.bHasMelee = false;
+				Character->CharacterWeaponState.bHasPistol = false;
+				Character->CharacterWeaponState.bHasRifle = true;
+					
+				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_SMG"))) {
+					RifleSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			case EWeaponType::EWT_Shotgun:
+				Character->CharacterWeaponState.bHasMelee = false;
+				Character->CharacterWeaponState.bHasPistol = false;
+				Character->CharacterWeaponState.bHasRifle = true;
+						
+				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Rifle"))) {
+					RifleSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			case EWeaponType::EWT_Sniper:
+				Character->CharacterWeaponState.bHasMelee = false;
+				Character->CharacterWeaponState.bHasPistol = false;
+				Character->CharacterWeaponState.bHasRifle = true;
+								
+				if (const USkeletalMeshSocket* RifleSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket_Sniper"))) {
+					RifleSocket->AttachActor(ActorToAttach, Character->GetMesh());
+				}
+				break;
+			default:
+				break;
+		}
+}
+
+void UCombatComponent::AttachActorToHolster(AActor* ActorToAttach)
+{
+	if (!Character || !Character->GetMesh() ||  !ActorToAttach) return;
+
+	if (const USkeletalMeshSocket* Holster = Character->GetMesh()->GetSocketByName(FName("PistolSocket")))
+	{
+		Holster->AttachActor(ActorToAttach, Character->GetMesh());
+	}
+}
+
+void UCombatComponent::AttachActorToBackPrimarySlot(AActor* ActorToAttach)
+{
+	if (!Character || !Character->GetMesh() ||  !ActorToAttach) return;
+
+	if (const USkeletalMeshSocket* BackPrimarySlotSocket = Character->GetMesh()->GetSocketByName(FName("PrimaryWeaponSlot")))
+	{
+		BackPrimarySlotSocket->AttachActor(ActorToAttach, Character->GetMesh());
+	}
+}
 
 
+bool UCombatComponent::ShouldSwapWeapons()
+{
+	if (EquippedWeapon && SecondaryWeapon) return true;
+	return false;
+}
+
+void UCombatComponent::SwapWeapons()
+{
+	AWeapon* HoldWeapon = EquippedWeapon;
+	EquippedWeapon = SecondaryWeapon;
+	SecondaryWeapon = HoldWeapon;
+
+	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	AttachActorToHand(EquippedWeapon);
+	EquippedWeapon->SetHUDAmmo();
+	if (CarryingAmmoMap.Contains(EquippedWeapon->GetWeaponType()))
+	{
+		CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
+	}
+
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+	if (SecondaryWeapon->GetWeaponType() == EWeaponType::EWT_Pistol)
+	{
+		AttachActorToHolster(SecondaryWeapon);
+	} else
+	{
+		AttachActorToBackPrimarySlot(SecondaryWeapon);
+	}
+}
 
