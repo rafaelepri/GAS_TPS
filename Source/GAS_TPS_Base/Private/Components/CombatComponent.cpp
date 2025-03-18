@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PlayerController/TpsPlayerController.h"
 #include "HUD/TpsHUD.h"
+#include "Weapons/HitScan/Shotgun/Shotgun.h"
 
 UCombatComponent::UCombatComponent() {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -136,7 +137,7 @@ void UCombatComponent::Fire() {
 			FireHitScanWeapon(HitResult.ImpactPoint, ProjectileSpawnLocation, TargetRotation);
 			break;
 		case EFireType::EFT_Shotgun:
-			FireShotgun();
+			FireShotgun(HitResult.ImpactPoint);
 			break;
 		default:
 			break;
@@ -152,8 +153,12 @@ void UCombatComponent::FireProjectileWeapon(const FVector_NetQuantize& TraceHitT
 	const FVector_NetQuantize ScatteredHitTarget = EquippedWeapon->TraceEndWithScatter(TraceHitTarget);
 	
 	ServerFire(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
-	FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
-	// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+
+	if (!Character->HasAuthority())
+	{
+		FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
+		// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+	}
 }
 
 void UCombatComponent::FireHitScanWeapon(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation)
@@ -161,13 +166,27 @@ void UCombatComponent::FireHitScanWeapon(const FVector_NetQuantize& TraceHitTarg
 	const FVector_NetQuantize ScatteredHitTarget = EquippedWeapon->TraceEndWithScatter(TraceHitTarget);
 	
 	ServerFire(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
-	FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
-	// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+
+	if (!Character->HasAuthority())
+	{
+		FireLocally(EquippedWeapon->bUseScatter ? ScatteredHitTarget : TraceHitTarget, ProjectileSpawnLocation, TargetRotation); // since we are calling server fire and local fire, we need to make sure we are not
+		// calling fire twice -> make sure multicast fire does nothing for the client who fired the weapon
+	}
 }
 
-void UCombatComponent::FireShotgun()
+void UCombatComponent::FireShotgun(const FVector_NetQuantize& TraceHitTarget)
 {
-	
+	if (AShotgun* Shotgun = Cast<AShotgun>(EquippedWeapon))
+	{
+		TArray<FVector_NetQuantize> HitTargets;
+		Shotgun->ShotgunTraceEndWithScatter(TraceHitTarget, HitTargets);
+
+		ServerShotgunFire(HitTargets);
+		if (!Character->HasAuthority())
+		{
+			FireShotgunLocally(HitTargets);
+		}
+	}
 }
 
 void UCombatComponent::ServerFire_Implementation(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) { // called in a client and executed on the server (RPC)
@@ -180,6 +199,17 @@ void UCombatComponent::MulticastFire_Implementation(const FVector_NetQuantize& T
 	FireLocally(TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
 }
 
+void UCombatComponent::ServerShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
+{
+	MulticastShotgunFire(TraceHitTargets);
+}
+
+void UCombatComponent::MulticastShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
+{
+	if (Character && Character->IsLocallyControlled() && !Character->HasAuthority()) return;
+	FireShotgunLocally(TraceHitTargets);
+}
+
 void UCombatComponent::FireLocally(const FVector_NetQuantize& TraceHitTarget,
 	const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) const
 {
@@ -187,6 +217,18 @@ void UCombatComponent::FireLocally(const FVector_NetQuantize& TraceHitTarget,
 	if (CombatState == ECombatState::ECS_Unoccupied)
 	{
 		EquippedWeapon->Fire(TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
+	}
+}
+
+void UCombatComponent::FireShotgunLocally(const TArray<FVector_NetQuantize>& TraceHitTargets)
+{
+	if (CombatState == ECombatState::ECS_Unoccupied || CombatState == ECombatState::ECS_Reloading)
+	{
+		if (AShotgun* Shotgun = Cast<AShotgun>(EquippedWeapon))
+		{
+			Shotgun->FireShotgun(TraceHitTargets);
+			CombatState = ECombatState::ECS_Unoccupied;
+		}
 	}
 }
 
