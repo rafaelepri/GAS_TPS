@@ -26,7 +26,7 @@ public:
 
 	void SetHUDAmmo();
 
-	void AddAmmo(const int32& AmmoToAdd);
+	void AddAmmo(const int32 AmmoToAdd);
 
 	void PlayReloadAnimation() const;
 
@@ -147,13 +147,20 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	int32 MagCapacity;
-	UPROPERTY(EditAnywhere, ReplicatedUsing = OnRep_Ammo)
+	UPROPERTY(EditAnywhere)
 	int32 WeaponAmmo;
-	UFUNCTION()
-	void OnRep_Ammo();
 
+	UFUNCTION(Client, Reliable)
+	void ClientUpdateAmmo(int32 ServerAmmo);
+	UFUNCTION(Client, Reliable)
+	void ClientAddAmmo(int32 AmmoToAdd);
+
+	// The number of unprocessed server requests for WeaponAmmo.
+	// Incremented in SpendRound() / Decremented in ClientUpdateAmmo()
+	int32 Sequence = 0;
+	
 	void SpendRound();
-
+	
 
 public:
 	void SetWeaponState(const EWeaponState State);

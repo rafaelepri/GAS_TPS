@@ -463,6 +463,10 @@ void ATpsPlayerController::CheckPing(const float DeltaTime)
 		PlayerState = !PlayerState ? GetPlayerState<AMainPlayerState>() : PlayerState;
 		if (PlayerState)
 		{
+			UE_LOG(LogTemp, Log, TEXT("GetPingInMilliseconds: %f"), PlayerState->GetPingInMilliseconds());
+			UE_LOG(LogTemp, Log, TEXT("GetCompressedPing: %hu"), PlayerState->GetCompressedPing());
+			UE_LOG(LogTemp, Log, TEXT("ExactPing: %f"), PlayerState->ExactPing);
+			
 			if (PlayerState->GetPingInMilliseconds() > HighPingThreshold) // GetPingInMilliseconds will multiply by 4. GetCompressedPing returns the ping / 4. Ping in compressed 
 			{
 				HighPingWarning();

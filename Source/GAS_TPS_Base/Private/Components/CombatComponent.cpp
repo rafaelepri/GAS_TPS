@@ -314,7 +314,7 @@ void UCombatComponent::UpdateAmmoValues(const bool bIsReloading)
 				CarryingAmmoMap[EquippedWeapon->GetWeaponType()] -= ReloadAmount;
 				CarryingAmmo = CarryingAmmoMap[EquippedWeapon->GetWeaponType()];
 
-				EquippedWeapon->AddAmmo(-ReloadAmount);
+				EquippedWeapon->AddAmmo(ReloadAmount);
 			}
 		}
 		

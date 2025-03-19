@@ -40,7 +40,6 @@ void AWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AWeapon, WeaponState);
-	DOREPLIFETIME(AWeapon, WeaponAmmo);
 }
 
 void AWeapon::BeginPlay() {
@@ -188,10 +187,7 @@ void AWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQ
 		}
 	}
 
-	if (HasAuthority())
-	{
-		SpendRound();
-	}
+	SpendRound();
 }
 
 void AWeapon::Dropped()
@@ -222,6 +218,46 @@ void AWeapon::SpendRound()
 {
 	WeaponAmmo = FMath::Clamp(WeaponAmmo - 1, 0, MagCapacity);
 	SetHUDAmmo();
+
+	if (HasAuthority())
+	{
+		ClientUpdateAmmo(WeaponAmmo);
+	} else
+	{
+		++Sequence;
+	}
+}
+
+void AWeapon::ClientUpdateAmmo_Implementation(int32 ServerAmmo)
+{
+	if (HasAuthority())
+	{
+		return;
+	}
+	
+	WeaponAmmo = ServerAmmo;
+	--Sequence;
+	WeaponAmmo -= Sequence;
+	SetHUDAmmo();
+}
+
+void AWeapon::AddAmmo(const int32 AmmoToAdd)
+{
+	WeaponAmmo = FMath::Clamp(WeaponAmmo + AmmoToAdd, 0, MagCapacity);
+	SetHUDAmmo();
+
+	ClientAddAmmo(AmmoToAdd);
+}
+
+void AWeapon::ClientAddAmmo_Implementation(const int32 AmmoToAdd)
+{
+	WeaponAmmo = FMath::Clamp(WeaponAmmo + AmmoToAdd, 0, MagCapacity);
+	TPSChar = !TPSChar ? Cast<ATPSCharacterBase>(GetOwner()) : TPSChar;
+	if (TPSChar)
+	{
+		// handle shotgun reload here / i skipped this class
+	}
+	SetHUDAmmo();
 }
 
 void AWeapon::PlayReloadAnimation() const
@@ -237,19 +273,6 @@ void AWeapon::EnableCustomDepth(bool bEnable)
 	{
 		WeaponMesh->SetRenderCustomDepth(bEnable);
 	}
-}
-
-void AWeapon::AddAmmo(const int32& AmmoToAdd)
-{
-	WeaponAmmo = FMath::Clamp(WeaponAmmo - AmmoToAdd, 0, MagCapacity);
-	SetHUDAmmo();
-}
-
-void AWeapon::OnRep_Ammo()
-{
-	TPSChar = TPSChar == nullptr ? Cast<ATPSCharacterBase>(GetOwner()) : TPSChar;
-	SetHUDAmmo();
-
 }
 
 void AWeapon::OnRep_Owner()
