@@ -7,7 +7,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Sound/SoundCue.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "DrawDebugHelpers.h"
 
 AHitScanWeapon::AHitScanWeapon()
@@ -86,15 +85,13 @@ void AHitScanWeapon::WeaponTraceHit(const FVector_NetQuantize& TraceHitTarget, c
 {
 	if (const UWorld* World = GetWorld())
 	{
-		const FVector End = bUseScatter ?
-			TraceEndWithScatter(ProjectileSpawnLocation, TraceHitTarget ) :
-			ProjectileSpawnLocation + (TraceHitTarget - ProjectileSpawnLocation) * 1.25f; // extends the trace after the hit so we always have accurate hit
+		const FVector End = ProjectileSpawnLocation + (TraceHitTarget - ProjectileSpawnLocation) * 1.25f; // extends the trace after the hit so we always have accurate hit
 
 		World->LineTraceSingleByChannel(
-		OutHit,
-		ProjectileSpawnLocation,
-		End,
-		ECC_Visibility
+			OutHit,
+			ProjectileSpawnLocation,
+			End,
+			ECC_Visibility
 		);
 
 		FVector BeamEnd = End;
@@ -103,6 +100,8 @@ void AHitScanWeapon::WeaponTraceHit(const FVector_NetQuantize& TraceHitTarget, c
 		{
 			BeamEnd = OutHit.ImpactPoint;
 		}
+
+		DrawDebugSphere(GetWorld(), BeamEnd, 16.f, 12, FColor::Orange, true);
 
 		if (BeamParticles)
 		{
@@ -113,27 +112,3 @@ void AHitScanWeapon::WeaponTraceHit(const FVector_NetQuantize& TraceHitTarget, c
 		}
 	}
 }
-
-FVector AHitScanWeapon::TraceEndWithScatter(const FVector& TraceStart, const FVector& HitTarget)
-{
-	const FVector ToTargetNormalized = (HitTarget - TraceStart).GetSafeNormal();
-	const FVector SphereCenter = TraceStart + ToTargetNormalized * DistanceToSphere;
-	const FVector RandomVector = UKismetMathLibrary::RandomUnitVector() * FMath::FRandRange(0.f, SphereRadius);
-	const FVector EndLocation = SphereCenter + RandomVector;
-	const FVector ToEndLocation = EndLocation - TraceStart;
-	
-	// DrawDebugSphere(GetWorld(), SphereCenter, SphereRadius, 12, FColor::Red, true);
-	// DrawDebugSphere(GetWorld(), EndLocation , 4.f, 24, FColor::Orange, true);
-	// DrawDebugLine(
-	// 	GetWorld(),
-	// 	TraceStart,
-	// 	FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size()),
-	// 	FColor::Green,
-	// 	true
-	// );
-
-	return FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size());
-}
-
-
-

@@ -8,6 +8,7 @@
 #include "Animation/AnimationAsset.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Weapons/Casing.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Net/UnrealNetwork.h"
 
 AWeapon::AWeapon() {
@@ -39,18 +40,15 @@ void AWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AWeapon, WeaponState);
-	DOREPLIFETIME(AWeapon, WeaponAmmo);
 }
 
 void AWeapon::BeginPlay() {
 	Super::BeginPlay();
 
-	if (HasAuthority()) {
-		AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		AreaSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-		AreaSphere->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnSphereOverlap);
-		AreaSphere->OnComponentEndOverlap.AddDynamic(this, &AWeapon::OnSphereEndOverlap);
-	}
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	AreaSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	AreaSphere->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnSphereOverlap);
+	AreaSphere->OnComponentEndOverlap.AddDynamic(this, &AWeapon::OnSphereEndOverlap);
 
 	if (PickupWidget) {
 		PickupWidget->SetVisibility(false);
@@ -220,6 +218,46 @@ void AWeapon::SpendRound()
 {
 	WeaponAmmo = FMath::Clamp(WeaponAmmo - 1, 0, MagCapacity);
 	SetHUDAmmo();
+
+	if (HasAuthority())
+	{
+		ClientUpdateAmmo(WeaponAmmo);
+	} else
+	{
+		++Sequence;
+	}
+}
+
+void AWeapon::ClientUpdateAmmo_Implementation(int32 ServerAmmo)
+{
+	if (HasAuthority())
+	{
+		return;
+	}
+	
+	WeaponAmmo = ServerAmmo;
+	--Sequence;
+	WeaponAmmo -= Sequence;
+	SetHUDAmmo();
+}
+
+void AWeapon::AddAmmo(const int32 AmmoToAdd)
+{
+	WeaponAmmo = FMath::Clamp(WeaponAmmo + AmmoToAdd, 0, MagCapacity);
+	SetHUDAmmo();
+
+	ClientAddAmmo(AmmoToAdd);
+}
+
+void AWeapon::ClientAddAmmo_Implementation(const int32 AmmoToAdd)
+{
+	WeaponAmmo = FMath::Clamp(WeaponAmmo + AmmoToAdd, 0, MagCapacity);
+	TPSChar = !TPSChar ? Cast<ATPSCharacterBase>(GetOwner()) : TPSChar;
+	if (TPSChar)
+	{
+		// handle shotgun reload here / i skipped this class
+	}
+	SetHUDAmmo();
 }
 
 void AWeapon::PlayReloadAnimation() const
@@ -235,19 +273,6 @@ void AWeapon::EnableCustomDepth(bool bEnable)
 	{
 		WeaponMesh->SetRenderCustomDepth(bEnable);
 	}
-}
-
-void AWeapon::AddAmmo(const int32& AmmoToAdd)
-{
-	WeaponAmmo = FMath::Clamp(WeaponAmmo - AmmoToAdd, 0, MagCapacity);
-	SetHUDAmmo();
-}
-
-void AWeapon::OnRep_Ammo()
-{
-	TPSChar = TPSChar == nullptr ? Cast<ATPSCharacterBase>(GetOwner()) : TPSChar;
-	SetHUDAmmo();
-
 }
 
 void AWeapon::OnRep_Owner()
@@ -271,5 +296,32 @@ void AWeapon::OnRep_Owner()
 bool AWeapon::IsEmpty() const
 {
 	return WeaponAmmo <= 0;
+}
+
+FVector AWeapon::TraceEndWithScatter(const FVector& HitTarget)
+{
+	const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleSocket");
+	if (!MuzzleFlashSocket) return FVector::ZeroVector;
+
+	const FTransform SocketTransform = MuzzleFlashSocket->GetSocketTransform(GetWeaponMesh());
+	const FVector TraceStart = SocketTransform.GetLocation();
+	
+	const FVector ToTargetNormalized = (HitTarget - TraceStart).GetSafeNormal();
+	const FVector SphereCenter = TraceStart + ToTargetNormalized * DistanceToSphere;
+	const FVector RandomVector = UKismetMathLibrary::RandomUnitVector() * FMath::FRandRange(0.f, SphereRadius);
+	const FVector EndLocation = SphereCenter + RandomVector;
+	const FVector ToEndLocation = EndLocation - TraceStart;
+	
+	// DrawDebugSphere(GetWorld(), SphereCenter, SphereRadius, 12, FColor::Red, true);
+	// DrawDebugSphere(GetWorld(), EndLocation , 4.f, 24, FColor::Orange, true);
+	// DrawDebugLine(
+	// 	GetWorld(),
+	// TraceStart,
+	// FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size()),
+	// FColor::Green,
+	// true
+	// );
+
+	return FVector(TraceStart + ToEndLocation * TRACE_LENGTH / ToEndLocation.Size());
 }
 

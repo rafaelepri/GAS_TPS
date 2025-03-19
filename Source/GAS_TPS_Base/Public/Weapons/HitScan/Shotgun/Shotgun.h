@@ -14,8 +14,8 @@ class GAS_TPS_BASE_API AShotgun : public AHitScanWeapon
 public:
 	AShotgun();
 
-	virtual void Fire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) override;
-
+	virtual void FireShotgun(const TArray<FVector_NetQuantize>& HitTargets);
+	void ShotgunTraceEndWithScatter(const FVector_NetQuantize& TraceHitTarget, TArray<FVector_NetQuantize>& HitTargets);
 protected:
 	virtual void BeginPlay() override;
 

@@ -175,14 +175,12 @@ void ATPSCharacterBase::PostInitializeComponents() {
 	}
 }
 
-void ATPSCharacterBase::Server_SetCharacterWeaponState_Implementation(const FCharacterWeaponState NewState) {
-	CharacterWeaponState = NewState;
-}
-
-
-
 void ATPSCharacterBase::Server_SetCharacterInputState_Implementation(const FCharacterInputState NewState) {
 	CharacterInputState = NewState;
+}
+
+void ATPSCharacterBase::Server_SetCharacterWeaponState_Implementation(const FCharacterWeaponState NewState) {
+	CharacterWeaponState = NewState;
 }
 
 void ATPSCharacterBase::Server_Traversal_Implementation(const FTraversalParams InTraversalParams) {
@@ -191,8 +189,6 @@ void ATPSCharacterBase::Server_Traversal_Implementation(const FTraversalParams I
 }
 
 /////////////////////////////////////////////////////////////////////////////////// INPUT SETUP
-
-
 
 void ATPSCharacterBase::NotifyControllerChanged() {
 	Super::NotifyControllerChanged();
@@ -328,7 +324,6 @@ void ATPSCharacterBase::StartAiming() {
 	CharacterInputState.bWantsToStrafe = false;
 	CharacterInputState.bWantsToSprint = false;
 	Server_SetCharacterInputState(CharacterInputState);
-
 }
 
 void ATPSCharacterBase::EndAiming() {
@@ -337,7 +332,6 @@ void ATPSCharacterBase::EndAiming() {
 	CharacterInputState.bWantsToStrafe = true;
 	CharacterInputState.bWantsToSprint = false;
 	Server_SetCharacterInputState(CharacterInputState);
-
 }
 
 void ATPSCharacterBase::PickUpAction() {
@@ -451,8 +445,6 @@ bool ATPSCharacterBase::CanSprint(const FVector& CurrentAcceleration) const {
 	) < 50.f;
 }
 
-
-
 //////////////////////////////////////////////////////////////////// MOVEMENT FUNCTIONS
 
 
@@ -465,16 +457,17 @@ void ATPSCharacterBase::UpdateRotation_PreCmc() const {
 }
 
 void ATPSCharacterBase::UpdateMovement_PreCmc() {
-	if(UCharacterMovementComponent* CharMovComponent = GetCharacterMovement()) {
+	if (UCharacterMovementComponent* CharMovComponent = GetCharacterMovement()) {
 		CurrentGait = GetDesiredGait(CharMovComponent->GetCurrentAcceleration());
 
 		CharMovComponent->MaxAcceleration = CalculateMaxAcceleration(CharMovComponent->Velocity);
 		CharMovComponent->BrakingDecelerationWalking = CalculateBrakingDeceleration();
 		CharMovComponent->GroundFriction = CurrentGait == EGait::Walk || CurrentGait == EGait::Run ? 5.0 :
 			UKismetMathLibrary::MapRangeClamped(UKismetMathLibrary::VSizeXY(CharMovComponent->Velocity), 0.0, 500.0, 5.0, 3.0);
-			
-		CharMovComponent->MaxWalkSpeed = CharMovComponent->MaxWalkSpeedCrouched =
-			CalculateMaxSpeed(CharMovComponent->Velocity);
+
+
+		// CharMovComponent->MaxWalkSpeed = CharMovComponent->MaxWalkSpeedCrouched =
+		// CalculateMaxSpeed(CharMovComponent->Velocity);
 	}
 }
 

@@ -148,7 +148,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
 
-	UFUNCTION(Server, Unreliable, Category = "Replication")
+	UFUNCTION(Server, Reliable, Category = "Replication")
 	void Server_SetCharacterInputState(const FCharacterInputState NewState);
 	UFUNCTION(Server, Unreliable, Category = "Replication")
 	void Server_SetCharacterWeaponState(const FCharacterWeaponState NewState);

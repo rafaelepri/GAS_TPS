@@ -26,7 +26,7 @@ public:
 
 	void SetHUDAmmo();
 
-	void AddAmmo(const int32& AmmoToAdd);
+	void AddAmmo(const int32 AmmoToAdd);
 
 	void PlayReloadAnimation() const;
 
@@ -72,6 +72,14 @@ public:
 	USoundCue* EquipSound;
 
 	bool bDestroyWeapon = false;
+
+	UPROPERTY(EditAnywhere)
+	EFireType FireType;
+	
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	bool bUseScatter = false;
+	
+	FVector TraceEndWithScatter(const FVector& HitTarget);
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -98,6 +106,10 @@ protected:
 	virtual void OnDroppedStateSet();
 	virtual void OnEquippedSecondaryStateSet();
 
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	float DistanceToSphere = 800.f;
+	UPROPERTY(EditAnywhere, category = WeaponScatter)
+	float SphereRadius = 75.f;
 private:
 	UPROPERTY()
 	class ATPSCharacterBase* TPSChar;
@@ -135,12 +147,21 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	int32 MagCapacity;
-	UPROPERTY(EditAnywhere, ReplicatedUsing = OnRep_Ammo)
+	UPROPERTY(EditAnywhere)
 	int32 WeaponAmmo;
-	UFUNCTION()
-	void OnRep_Ammo();
 
+	UFUNCTION(Client, Reliable)
+	void ClientUpdateAmmo(int32 ServerAmmo);
+	UFUNCTION(Client, Reliable)
+	void ClientAddAmmo(int32 AmmoToAdd);
+
+	// The number of unprocessed server requests for WeaponAmmo.
+	// Incremented in SpendRound() / Decremented in ClientUpdateAmmo()
+	int32 Sequence = 0;
+	
 	void SpendRound();
+	
+
 public:
 	void SetWeaponState(const EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }

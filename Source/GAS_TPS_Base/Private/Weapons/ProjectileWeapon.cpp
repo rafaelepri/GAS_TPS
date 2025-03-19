@@ -4,8 +4,7 @@
 #include "Weapons/Projectile.h"
 
 void AProjectileWeapon::Fire(const FVector_NetQuantize& TraceHitTarget, const FVector_NetQuantize& ProjectileSpawnLocation, const FRotator& TargetRotation) {
-	Super::Fire(TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
-
+	AWeapon::Fire(TraceHitTarget, ProjectileSpawnLocation, TargetRotation);
 
 	if (!HasAuthority()) return; 
 	
