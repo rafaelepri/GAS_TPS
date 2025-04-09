@@ -41,7 +41,6 @@ public:
 	class ATPSCharacterBase* Character;
 	UPROPERTY(Transient)
 	class UCharacterMovementComponent* MovementComponent;
-
 };
 
 

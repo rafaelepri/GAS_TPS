@@ -722,7 +722,7 @@ void UAnimInstanceBase::UpdateSpineRotation(const float DeltaSeconds) {
 		SpineRotation.Roll = TargetSpineRoll;
 		return;
 	}
-
+	
 	// 2. Interpolate toward the target roll
 	SmoothedSpineRoll = FMath::FInterpTo(
 		SmoothedSpineRoll,
